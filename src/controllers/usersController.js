@@ -13,8 +13,6 @@ const getUserById = (request, response) => {
   const id = parseInt(request.params.id)
 
   pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
-    const {id} = results.rows[0]
-    console.log(id)
     if (error) {
       throw error
     }
@@ -23,21 +21,29 @@ const getUserById = (request, response) => {
 }
 
 const createUser = async (request, response) => {
-  const { name, email } = request.body
-
-pool.query('INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *', [name, email], (error, results) => {
+  const { name, email, user_id } = request.body
+  
+  if(!name || !email || !user_id) {
+    return response.status(400).send('request.body is missing/incomplete. Check request.body')
+  }
+  
+  await pool.query('INSERT INTO users (name, email, user_id) VALUES ($1, $2, $3) RETURNING *', [name, email, user_id], (error, results) => {
     if (error) {
       throw error
-    } else if (!Array.isArray(results.rows) || results.rows.length < 1) {
-    	throw error
     }
-    response.status(201).send(`User added with ID: ${results.rows[0].id}`)
+
+    response.status(201).send(`User successfully added with ID: ${results.rows[0].id}`)
   })
 }
 
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id)
   const { name, email } = request.body
+
+  if(!name || !email) {
+  return response.status(400).send('request.body is missing/incomplete. Check request.body')
+  }
+
 
   pool.query(
     'UPDATE users SET name = $1, email = $2 WHERE id = $3',
