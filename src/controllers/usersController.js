@@ -1,6 +1,6 @@
-const {pool} = require('../queries')
+const {pool} = require('../dbConfig')
 
-const getUsers = (request, response) => {
+const getAllUsers = (request, response) => {
   pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
     if (error) {
       throw error
@@ -20,14 +20,14 @@ const getUserById = (request, response) => {
   })
 }
 
-const createUser = async (request, response) => {
-  const { name, email, user_id } = request.body
+const createUser = (request, response) => {
+  const { name, email, user_id, password } = request.body
   
   if(!name || !email || !user_id) {
     return response.status(400).send('request.body is missing/incomplete. Check request.body')
   }
   
-  await pool.query('INSERT INTO users (name, email, user_id) VALUES ($1, $2, $3) RETURNING *', [name, email, user_id], (error, results) => {
+  pool.query('INSERT INTO users (name, email, user_id, password) VALUES ($1, $2, $3, $4) RETURNING *', [name, email, user_id, password], (error, results) => {
     if (error) {
       throw error
     }
@@ -48,7 +48,7 @@ const updateUser = (request, response) => {
   pool.query(
     'UPDATE users SET name = $1, email = $2 WHERE id = $3',
     [name, email, id],
-    (error, results) => {
+    (error) => {
       if (error) {
         throw error
       }
@@ -69,7 +69,7 @@ const deleteUser = (request, response) => {
 }
 
 module.exports = {
-  getUsers,
+  getAllUsers,
   getUserById,
   createUser,
   updateUser,

@@ -1,4 +1,4 @@
-const {pool} = require('../queries')
+const {pool} = require('../dbConfig')
 
 const getAllCarts = (request, response) => {
   pool.query('SELECT * FROM cart ORDER BY id ASC', (error, results) => {

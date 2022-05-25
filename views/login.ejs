@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
+    /> -->
+    <link rel="icon" type="image/x-icon" href="/image/favicon.ico">
+    <link rel="stylesheet" href="/css/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login</title>
+  </head>
+  <body>
+    <header class="container">
+      <div class="header">
+            <H1>e-Commerce API</H1>
+            <h3>fjorwb</h3>
+            <div class="logout">
+                <h1>Login</h1>
+                <!-- <form action="/auth/login" method="GET">
+                  <input type="submit" value='login' class='btn'/>
+                </form> -->
+            </div>
+        <hr>
+        <p>This RESTful API is part of Project Portfolio of FSE Caodecademy path career.
+        </p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi numquam libero facere odio est eligendi, provident ipsa, blanditiis adipisci officia accusamus veritatis sint temporibus molestias minima reprehenderit excepturi, a beatae.
+        </p>
+        <br>
+      </div>
+    </header>
+
+    <ul>
+      <% if (typeof errors != 'undefined') { %> <% errors.forEach(error => { %>
+      <li><%= error.message %></li>
+      <% }) %> <% } %>
+    </ul>
+
+    <ul>
+      <% if(messages.success_msg) { %>
+      <li><%= messages.success_msg %></li>
+      <% } %>
+    </ul>
+
+    <ul>
+      <% if (messages.error) { %>
+      <li><%= messages.error %></li>
+      <% } %>
+    </ul>
+
+    <form action="/auth/login" method="POST">
+      <div>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="username"
+          required
+        />
+      </div>
+      <div>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <div>
+        <input type="submit" value="Login" class="btn"/>
+      </div>
+
+      <a href="/auth/register">Register</a>
+    </form>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-const {pool} = require('../queries')
+const {pool} = require('../dbConfig')
 
 const getCategories = (request, response) => {
   pool.query('SELECT * FROM categories ORDER BY id ASC', (error, results) => {
