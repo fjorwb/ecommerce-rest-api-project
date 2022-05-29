@@ -3,6 +3,7 @@ require('express-async-errors')
 
 const express = require('express')
 
+const {db} = require('./src/dbConfig')
 const {pool} = require('./src/dbConfig')
 
 const passport = require('passport')
@@ -58,8 +59,8 @@ app.use('/users', checkAuthenticated, routerUsers)
 app.use('/products', checkAuthenticated, routerProducts)
 app.use('/accounts', checkAuthenticated, routerAccounts)
 app.use('/categories', checkAuthenticated, routerCategories)
-app.use('/cart', checkAuthenticated, routerCart)
-app.use('/orders', checkAuthenticated, routerOrders)
+app.use('/cart', routerCart)
+app.use('/orders', routerOrders)
 
 app.get('/', checkNotAuthenticated, (req, res) => {
     res.render('index.ejs')

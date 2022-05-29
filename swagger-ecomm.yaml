@@ -1,0 +1,1067 @@
+openapi: 3.0.0
+info:
+  title: e-commerce API
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://localhost:5000/
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: registerUser
+      operationId: registerUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerUserRequest'
+            example:
+              name: pepe
+              email: pepe@euro.com
+              password: 1234pepe
+              password2: 1234pepe
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: loginUser
+      operationId: loginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginUserRequest'
+            example:
+              name: john
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/logout:
+    get:
+      tags:
+      - Auth
+      summary: logoutUser
+      operationId: logoutUser
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /users:
+    get:
+      tags:
+      - users
+      summary: getAllUsers
+      operationId: getAllUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - users
+      summary: createUser
+      operationId: createUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUserRequest'
+            example:
+              name: piets22222
+              email: piets@tumbes.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /user/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    get:
+      tags:
+      - users
+      summary: getUserById
+      operationId: getUserById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    put:
+      tags:
+      - users
+      summary: updateUser
+      operationId: updateUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateUserRequest'
+            example:
+              name: mux
+              email: mu@dogs.com
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - users
+      summary: deleteUser
+      operationId: deleteUser
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /accounts:
+    get:
+      tags:
+      - Accounts
+      summary: getAllAccounts
+      operationId: getAllAccounts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - Accounts
+      summary: createAccount
+      operationId: createAccount
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createAccountRequest'
+            example:
+              account_id: '00004'
+              account_user_id: 4
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /accounts/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    get:
+      tags:
+      - Accounts
+      summary: getAccountById
+      operationId: getAccountById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+      - Accounts
+      summary: updateAccount
+      operationId: updateAccount
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateAccountRequest'
+            example:
+              account_id: xxxxx
+              account_user_id: 10
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Accounts
+      summary: deleteAccount
+      operationId: deleteAccount
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /categories:
+    get:
+      tags:
+      - Categories
+      summary: getCategories
+      operationId: getCategories
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - Categories
+      summary: createCategory
+      operationId: createCategory
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCategoryRequest'
+            example:
+              category_id: '1002'
+              category_name: higiene
+              category_description: higiene
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /categories/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The category ID
+    get:
+      tags:
+      - Categories
+      summary: getCategoryById
+      operationId: getCategoryById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+      - Categories
+      summary: updateCategory
+      operationId: updateCategory
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateCategoryRequest'
+            example:
+              category_id: '1100'
+              category_name: beverages
+              category_description: beverages
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Categories
+      summary: deleteCategory
+      operationId: deleteCategory
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /products:
+    get:
+      tags:
+      - Products
+      summary: getAllProducts
+      operationId: getAllProducts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - Products
+      summary: createProduct
+      operationId: createProduct
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createProductRequest'
+            example:
+              product_id: 1000-1004
+              product_name: Tomato
+              product_description: Tomato
+              product_price: 25
+              product_unit: kg
+              product_img: https://i.ibb.co/x14wtM0/tomatoe.png
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /products/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    get:
+      tags:
+      - Products
+      summary: getProductById
+      operationId: getProductById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+      - Products
+      summary: updateProduct
+      operationId: updateProduct
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateProductRequest'
+            example:
+              product_id: 1000-1004
+              product_name: Radish
+              product_description: Radish
+              product_price: 5.86
+              product_unit: kg
+              product_img: https://i.ibb.co/k0GRcrS/radish.png
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Products
+      summary: deleteProduct
+      operationId: deleteProduct
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /cart:
+    get:
+      tags:
+      - Cart
+      summary: getAllCarts
+      operationId: getAllCarts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - Cart
+      summary: createCart
+      operationId: createCart
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCartRequest'
+            example:
+              cart_id: '000004'
+              user_id: '000002'
+              product_id: 1000-1002
+              quantity: 200
+              date: 1652393935
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /cart/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    get:
+      tags:
+      - Cart
+      summary: getCartById
+      operationId: getCartById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /cart/cart/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The cart ID
+    get:
+      tags:
+      - Cart
+      summary: getCartByCartId
+      operationId: getCartByCartId
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Cart
+      summary: deleteCart
+      operationId: deleteCart
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /cart/{ix}:
+    parameters:
+      - in: path
+        name: ix
+        schema:
+          type: object
+        required: true
+        description: The cart ID
+    put:
+      tags:
+      - Cart
+      summary: updateCart
+      operationId: updateCart
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateCartRequest'
+            example:
+              quantity: 6
+              date: 1652393935
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /orders:
+    get:
+      tags:
+      - Orders
+      summary: getAllOrders
+      operationId: getAllOrders
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - Orders
+      summary: createOrder
+      operationId: createOrder
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createOrderRequest'
+            example:
+              order_id: '000003'
+              user_id: '000005'
+              cart_id: '000004'
+              account_id: 000005-001
+              product_id: 1000-1006
+              quantity: 7
+              price: 15.1
+              discount: 0.1
+              tax: 0.06
+              date: 1652473014
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /orders/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The order ID
+    get:
+      tags:
+      - Orders
+      summary: getOrderById
+      operationId: getOrderById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Orders
+      summary: deleteOrder
+      operationId: deleteOrder
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /orders/order/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    get:
+      tags:
+      - Orders
+      summary: getOrderByOrderId
+      operationId: getOrderByOrderId
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /orders/{ix}:
+    parameters:
+      - in: path
+        name: ix
+        schema:
+          type: object
+        required: true
+        description: The user ID
+    put:
+      tags:
+      - Orders
+      summary: updateOrder
+      operationId: updateOrder
+      parameters: []
+      requestBody: 
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateOrderRequest'
+            example:
+              quantity: 9
+              price: 5.1
+              discount: 0.1
+              tax: 0.06
+              date: 1652473014
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    registerUserRequest:
+      title: registerUserRequest
+      required:
+      - name
+      - email
+      - password
+      - password2
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        password2:
+          type: string
+      example:
+        name: pepe
+        email: pepe@euro.com
+        password: 1234pepe
+        password2: 1234pepe
+    loginUserRequest:
+      title: loginUserRequest
+      required:
+      - name
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+      example:
+        name: john
+        password: secret
+    createUserRequest:
+      title: createUserRequest
+      required:
+      - name
+      - email
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      example:
+        name: piets22222
+        email: piets@tumbes.com
+    updateUserRequest:
+      title: updateUserRequest
+      required:
+      - name
+      - email
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      example:
+        name: mux
+        email: mu@dogs.com
+    deleteUserRequest:
+      title: deleteUserRequest
+      required:
+      - name
+      - email
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+      example:
+        name: tutti
+        email: tutti@post.com
+    createAccountRequest:
+      title: createAccountRequest
+      required:
+      - account_id
+      - account_user_id
+      type: object
+      properties:
+        account_id:
+          type: string
+        account_user_id:
+          type: integer
+          format: int32
+      example:
+        account_id: '00004'
+        account_user_id: 4
+    updateAccountRequest:
+      title: updateAccountRequest
+      required:
+      - account_id
+      - account_user_id
+      type: object
+      properties:
+        account_id:
+          type: string
+        account_user_id:
+          type: integer
+          format: int32
+      example:
+        account_id: xxxxx
+        account_user_id: 10
+    createCategoryRequest:
+      title: createCategoryRequest
+      required:
+      - category_id
+      - category_name
+      - category_description
+      type: object
+      properties:
+        category_id:
+          type: string
+        category_name:
+          type: string
+        category_description:
+          type: string
+      example:
+        category_id: '1002'
+        category_name: higiene
+        category_description: higiene
+    updateCategoryRequest:
+      title: updateCategoryRequest
+      required:
+      - category_id
+      - category_name
+      - category_description
+      type: object
+      properties:
+        category_id:
+          type: string
+        category_name:
+          type: string
+        category_description:
+          type: string
+      example:
+        category_id: '1100'
+        category_name: beverages
+        category_description: beverages
+    deleteCategoryRequest:
+      title: deleteCategoryRequest
+      required:
+      - category_id
+      - category_name
+      - category_description
+      type: object
+      properties:
+        category_id:
+          type: string
+        category_name:
+          type: string
+        category_description:
+          type: string
+      example:
+        category_id: '1100'
+        category_name: beverages
+        category_description: beverages
+    createProductRequest:
+      title: createProductRequest
+      required:
+      - product_id
+      - product_name
+      - product_description
+      - product_price
+      - product_unit
+      - product_img
+      type: object
+      properties:
+        product_id:
+          type: string
+        product_name:
+          type: string
+        product_description:
+          type: string
+        product_price:
+          type: integer
+          format: int32
+        product_unit:
+          type: string
+        product_img:
+          type: string
+      example:
+        product_id: 1000-1004
+        product_name: Tomato
+        product_description: Tomato
+        product_price: 25
+        product_unit: kg
+        product_img: https://i.ibb.co/x14wtM0/tomatoe.png
+    updateProductRequest:
+      title: updateProductRequest
+      required:
+      - product_id
+      - product_name
+      - product_description
+      - product_price
+      - product_unit
+      - product_img
+      type: object
+      properties:
+        product_id:
+          type: string
+        product_name:
+          type: string
+        product_description:
+          type: string
+        product_price:
+          type: number
+        product_unit:
+          type: string
+        product_img:
+          type: string
+      example:
+        product_id: 1000-1004
+        product_name: Radish
+        product_description: Radish
+        product_price: 5.86
+        product_unit: kg
+        product_img: https://i.ibb.co/k0GRcrS/radish.png
+    createCartRequest:
+      title: createCartRequest
+      required:
+      - cart_id
+      - user_id
+      - product_id
+      - quantity
+      - date
+      type: object
+      properties:
+        cart_id:
+          type: string
+        user_id:
+          type: string
+        product_id:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        date:
+          type: integer
+          format: int32
+      example:
+        cart_id: '000004'
+        user_id: '000002'
+        product_id: 1000-1002
+        quantity: 200
+        date: 1652393935
+    updateCartRequest:
+      title: updateCartRequest
+      required:
+      - quantity
+      - date
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int32
+        date:
+          type: integer
+          format: int32
+      example:
+        quantity: 6
+        date: 1652393935
+    createOrderRequest:
+      title: createOrderRequest
+      required:
+      - order_id
+      - user_id
+      - cart_id
+      - account_id
+      - product_id
+      - quantity
+      - price
+      - discount
+      - tax
+      - date
+      type: object
+      properties:
+        order_id:
+          type: string
+        user_id:
+          type: string
+        cart_id:
+          type: string
+        account_id:
+          type: string
+        product_id:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        price:
+          type: number
+        discount:
+          type: number
+        tax:
+          type: number
+        date:
+          type: integer
+          format: int32
+      example:
+        order_id: '000003'
+        user_id: '000005'
+        cart_id: '000004'
+        account_id: 000005-001
+        product_id: 1000-1006
+        quantity: 7
+        price: 15.1
+        discount: 0.1
+        tax: 0.06
+        date: 1652473014
+    deleteOrderRequest:
+      title: deleteOrderRequest
+      required:
+      - order_id
+      - user_id
+      - cart_id
+      - account_id
+      - product_id
+      - quantity
+      - price
+      - discount
+      - tax
+      - date
+      type: object
+      properties:
+        order_id:
+          type: string
+        user_id:
+          type: string
+        cart_id:
+          type: string
+        account_id:
+          type: string
+        product_id:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        price:
+          type: integer
+          format: int32
+        discount:
+          type: number
+        tax:
+          type: number
+        date:
+          type: integer
+          format: int32
+      example:
+        order_id: '000003'
+        user_id: '000005'
+        cart_id: '000004'
+        account_id: 000005-001
+        product_id: 1000-1004
+        quantity: 8
+        price: 8
+        discount: 0.1
+        tax: 0.06
+        date: 1652473014
+    updateOrderRequest:
+      title: updateOrderRequest
+      required:
+      - quantity
+      - price
+      - discount
+      - tax
+      - date
+      type: object
+      properties:
+        quantity:
+          type: integer
+          format: int32
+        price:
+          type: number
+        discount:
+          type: number
+        tax:
+          type: number
+        date:
+          type: integer
+          format: int32
+      example:
+        quantity: 9
+        price: 5.1
+        discount: 0.1
+        tax: 0.06
+        date: 1652473014
+  securitySchemes:
+    httpBasic:
+      type: http
+      scheme: basic
+security:
+- httpBasic: []
+tags:
+- name: Auth
+- name: users
+- name: Accounts
+- name: Categories
+- name: Products
+- name: Cart
+- name: Orders

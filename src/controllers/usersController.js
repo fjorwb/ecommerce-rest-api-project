@@ -1,5 +1,6 @@
 const {pool} = require('../dbConfig')
 
+// get all users
 const getAllUsers = (request, response) => {
   pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
     if (error) {
@@ -9,6 +10,7 @@ const getAllUsers = (request, response) => {
   })
 }
 
+// get an user by id
 const getUserById = (request, response) => {
   const id = parseInt(request.params.id)
 
@@ -20,22 +22,7 @@ const getUserById = (request, response) => {
   })
 }
 
-const createUser = (request, response) => {
-  const { name, email, user_id, password } = request.body
-  
-  if(!name || !email || !user_id) {
-    return response.status(400).send('request.body is missing/incomplete. Check request.body')
-  }
-  
-  pool.query('INSERT INTO users (name, email, user_id, password) VALUES ($1, $2, $3, $4) RETURNING *', [name, email, user_id, password], (error, results) => {
-    if (error) {
-      throw error
-    }
-
-    response.status(201).send(`User successfully added with ID: ${results.rows[0].id}`)
-  })
-}
-
+// update user
 const updateUser = (request, response) => {
   const id = parseInt(request.params.id)
   const { name, email } = request.body
@@ -43,7 +30,6 @@ const updateUser = (request, response) => {
   if(!name || !email) {
   return response.status(400).send('request.body is missing/incomplete. Check request.body')
   }
-
 
   pool.query(
     'UPDATE users SET name = $1, email = $2 WHERE id = $3',
@@ -57,6 +43,7 @@ const updateUser = (request, response) => {
   )
 }
 
+// delete user
 const deleteUser = (request, response) => {
   const id = parseInt(request.params.id)
 
@@ -68,10 +55,25 @@ const deleteUser = (request, response) => {
   })
 }
 
+// get an user or user by name(first and last name)
+const getUserByUserName = (request, response) => {
+  console.log(request.params.name)
+
+  // const {name} = JSON.parse(request.params.name)
+  const name = request.params.name
+
+  pool.query('SELECT * FROM users WHERE name = $1', [name], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 module.exports = {
   getAllUsers,
   getUserById,
-  createUser,
+  getUserByUserName,
   updateUser,
   deleteUser,
 }

@@ -22,13 +22,11 @@ const dashboard = (req, res) => {
 }
 
 const registerUser = async (request, response) => {
-  let {name, email, password, password2} = request.body
+  let {firstname, lastname, email, password, password2} = request.body
 
   let errors = []
 
-  console.log(name, email, password, password)
-
-  if(!name || !email || !password || !password2) {
+  if(!firstname || !lastname || !email || !password || !password2) {
     errors.push({message: 'Field missing. Please enter all fields required'})
   }
   if(password.length < 6) {
@@ -38,7 +36,7 @@ const registerUser = async (request, response) => {
     errors.push({message: "Passwords do not match"})
   }
   if(errors.length > 0) {
-    response.render("register.ejs", {errors, name, email, password, password2})
+    response.render("register.ejs", {errors, firstname, lastname, email, password, password2})
   } else {
     hashedPassword = await bcrypt.hash(password, 10)
     console.log(hashedPassword)
@@ -48,13 +46,13 @@ const registerUser = async (request, response) => {
       if (err) {
         console.log(err);
       }
-      console.log(results.rows);
 
       if(results.rows.length > 0) {
         console.log('Email already registered')
         request.flash("error", "Email already registered")
         response.render("register.ejs", {message: 'Email already registered'})
       } else {
+        const name = `${firstname} ${lastname}`
         pool.query(
           `INSERT INTO users (name, email, password)
               VALUES ($1, $2, $3)`,
@@ -63,7 +61,6 @@ const registerUser = async (request, response) => {
             if(error) {
               throw error
             }
-            console.log(results.rows)
             request.flash("success_msg", "You are now registered. Please log in");
             response.redirect("/auth/login");
           }
