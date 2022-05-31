@@ -1,6 +1,9 @@
 const {pool} = require('../dbConfig')
+const {db} = require('../dbConfig')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
+
+const Convert = require('../helpers/tableCodes')
 
 const logoutUser = function (req, res){
 req.session.destroy(function() {
@@ -39,8 +42,24 @@ const registerUser = async (request, response) => {
     response.render("register.ejs", {errors, firstname, lastname, email, password, password2})
   } else {
     hashedPassword = await bcrypt.hash(password, 10)
-    console.log(hashedPassword)
   }
+
+  //check orders for orders_id
+  try {
+    const users = await db.one('SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1')
+
+    if(users?.length === 0 || users?.length === null){
+        user_num = 1
+    } else {
+        user_num = Number(users.user_id) + 1
+    }
+
+  } catch (error) {
+      user_num = 1
+  }
+
+  user_id = Convert(user_num)
+
   pool.query(
     'SELECT * FROM users WHERE email = $1', [email],(err, results) => {
       if (err) {
@@ -54,9 +73,9 @@ const registerUser = async (request, response) => {
       } else {
         const name = `${firstname} ${lastname}`
         pool.query(
-          `INSERT INTO users (name, email, password)
-              VALUES ($1, $2, $3)`,
-          [name, email, hashedPassword],
+          `INSERT INTO users (user_id, name, email, password)
+              VALUES ($1, $2, $3, $4)`,
+          [user_id, name, email, hashedPassword],
           (error, results) => {
             if(error) {
               throw error

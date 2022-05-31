@@ -31,6 +31,7 @@ const routerAccounts = require('./src/routes/routeAccounts')
 const routerCategories = require('./src/routes/routeCategories')
 const routerCart = require('./src/routes/routeCart')
 const routerOrders = require('./src/routes/routeOrders')
+const routerCheckout = require('./src/routes/routeCheckout')
 
 
 //middlewares
@@ -56,11 +57,12 @@ app.use(methodOverride('_method'))
 
 app.use('/auth', routerAuth)
 app.use('/users', checkAuthenticated, routerUsers)
-app.use('/products', checkAuthenticated, routerProducts)
+app.use('/products', routerProducts)
 app.use('/accounts', checkAuthenticated, routerAccounts)
 app.use('/categories', checkAuthenticated, routerCategories)
 app.use('/cart', routerCart)
 app.use('/orders', routerOrders)
+app.use('/checkout', routerCheckout)
 
 app.get('/', checkNotAuthenticated, (req, res) => {
     res.render('index.ejs')

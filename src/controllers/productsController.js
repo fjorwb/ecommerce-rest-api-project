@@ -1,4 +1,5 @@
 const {pool} = require('../dbConfig')
+const db = require('../dbConfig')
 
 const getProducts = (request, response) => {
   pool.query('SELECT * FROM products ORDER BY id ASC', (error, results) => {
@@ -20,23 +21,36 @@ const getProductById = (request, response) => {
   })
 }
 
+const getProductByCategoryId = (request, response) => {
+  console.log(request.params.id)
+
+  pool.query(`SELECT * FROM products WHERE substring(product_id,1,4) = $1`, [category_id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+
 const createProduct = async (request, response) => {
   const { 
       product_id,
-      product_name,
-      product_description,
-      product_price,
-      product_unit,
-      product_img
+      name,
+      description,
+      price,
+      unit,
+      discount,
+      img
     } = request.body
 
-  await pool.query('INSERT INTO products (product_id, product_name, product_description, product_price, product_unit, product_img) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [
+  await pool.query('INSERT INTO products (product_id, name, description, price, unit, discount, img) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [
       product_id,
-      product_name,
-      product_description,
-      product_price,
-      product_unit,
-      product_img
+      name,
+      description,
+      price,
+      unit,
+      discount,
+      img
       ], (error, results) => {
     if (error) {
       throw error
@@ -90,6 +104,7 @@ const deleteProduct = (request, response) => {
 module.exports = {
   getProducts,
   getProductById,
+  getProductByCategoryId,
   createProduct,
   updateProduct,
   deleteProduct,

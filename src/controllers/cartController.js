@@ -1,6 +1,7 @@
 const {pool} = require('../dbConfig')
 const {db} = require('../dbConfig')
 
+const Convert = require('../helpers/tableCodes')
 
 
 const getAllCarts = async (request, response) => {
@@ -61,15 +62,41 @@ const getCartByCartId = async (request, response) => {
 
 const createCart = async (request, response) => {
   const {
-    cart_id,
     user_id,
     product_id,
     quantity,
+    samecart
   } = request.body
 
   date = Date.now()
+  cart_num = 0
 
-  console.log(cart_id, user_id, product_id, quantity, date )
+  console.log(user_id, product_id, quantity, date )
+
+  if(!samecart) {
+  try {
+    const cart = await db.one('SELECT cart_id FROM cart ORDER BY cart_id DESC LIMIT 1')
+
+    console.log(cart);
+
+    if(cart?.length === 0) {
+      cart_num = 1
+    } else {
+      cart_num = Number(cart.cart_id) +1
+    }
+    
+  } catch (error) {
+    cart_num = 1
+  }
+ } else {
+    const cart = await db.one('SELECT cart_id FROM cart ORDER BY cart_id DESC LIMIT 1')
+      cart_num = Number(cart.cart_id)
+  }
+
+  console.log('dsadads',cart_num)
+
+  cart_id = Convert(cart_num)
+  console.log(cart_id)
 
   try {
     const statement = ('SELECT * FROM cart WHERE cart_id = $1')
