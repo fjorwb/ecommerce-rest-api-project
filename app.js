@@ -15,9 +15,9 @@ const {pool} = require('./src/dbConfig')
 const passport = require('passport')
 const session = require('express-session')
 const flash = require('express-flash')
-const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+
 const notFound = require('./src/middlewares/notFound')
 const errorHandler = require('./src/middlewares/errorHandler')
 
@@ -65,8 +65,6 @@ app.use(session({
 
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(methodOverride('_method'))
-
 
 app.use('/auth', routerAuth)
 app.use('/users', checkAuthenticated, routerUsers)
