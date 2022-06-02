@@ -49,9 +49,6 @@ const createOrder = (request, response) => {
 
   pool.query('INSERT INTO orders (order_id, user_id, cart_id, account_id, product_id, quantity, price, discount, tax, date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [
       order_id,
-      user_id,
-      cart_id,
-      account_id,
       product_id,
       quantity,
       price,
@@ -67,13 +64,14 @@ const createOrder = (request, response) => {
 }
 
 const updateOrder = (request, response) => {
-  const {prm1, prm2} = JSON.parse(request.params.id)
-  const { 
+  const {
+      order_id,
+      product_id,
       quantity,
       price,
       discount,
       tax,
-      date,
+      date
     } = request.body
 
   pool.query(
@@ -84,14 +82,14 @@ const updateOrder = (request, response) => {
       discount,
       tax,
       date,
-      prm1,
-      prm2
+      order_id,
+      product_id
     ],
     (error, ) => {
       if (error) {
         throw error
       }
-      response.status(200).send(`Order id:${prm1} with product_id ${prm2} modified succesfully`)
+      response.status(200).send(`Order id:${order_id} with product_id ${product_id} modified succesfully`)
     }
   )
 }

@@ -1,6 +1,12 @@
 require('dotenv').config()
 require('express-async-errors')
 
+// extra security packages
+const helmet = require('helmet')
+const cors = require('cors')
+const xss = require('xss-clean')
+const rateLimiter = require('express-rate-limit')
+
 const express = require('express')
 
 const {db} = require('./src/dbConfig')
@@ -10,6 +16,7 @@ const passport = require('passport')
 const session = require('express-session')
 const flash = require('express-flash')
 const methodOverride = require('method-override')
+const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const notFound = require('./src/middlewares/notFound')
 const errorHandler = require('./src/middlewares/errorHandler')
@@ -39,9 +46,16 @@ app.use(express.static('/public'))
 app.use('/css', express.static(__dirname + '/public/css'))
 app.use('/image', express.static(__dirname + '/public/image'))
 
+app.use(rateLimiter({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100
+}))
 app.use(morgan('tiny'))
-app.use(express.json());
-app.use(express.urlencoded({extended:false}))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(helmet())
+app.use(cors())
+app.use(xss())
 
 app.use(flash())
 app.use(session({
@@ -57,12 +71,12 @@ app.use(methodOverride('_method'))
 
 app.use('/auth', routerAuth)
 app.use('/users', checkAuthenticated, routerUsers)
-app.use('/products', routerProducts)
+app.use('/products', checkAuthenticated, routerProducts)
 app.use('/accounts', checkAuthenticated, routerAccounts)
 app.use('/categories', checkAuthenticated, routerCategories)
-app.use('/cart', routerCart)
-app.use('/orders', routerOrders)
-app.use('/checkout', routerCheckout)
+app.use('/cart', checkAuthenticated, routerCart)
+app.use('/orders', checkAuthenticated, routerOrders)
+app.use('/checkout', checkAuthenticated, routerCheckout)
 
 app.get('/', checkNotAuthenticated, (req, res) => {
     res.render('index.ejs')
