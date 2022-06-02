@@ -4,7 +4,7 @@
   "description": "project on rest api using node, express and postgres SQL",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Fernando Oliveri",
