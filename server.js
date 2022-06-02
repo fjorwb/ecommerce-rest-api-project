@@ -23,7 +23,6 @@ const errorHandler = require('./src/middlewares/errorHandler')
 
 const app = express()
 
-const port = process.env.PORT || 5000
 
 const initializePassport = require('./passportConfig')
 initializePassport(passport)
@@ -100,14 +99,19 @@ function checkNotAuthenticated(req, res, next) {
 app.use(notFound)
 app.use(errorHandler)
 
+const port = process.env.PORT || 5000
 
-const start = async () => {
-    try {
-        app.listen(port, console.log(`Listening on port ${port}`))
+app.listen(port, () => {
+  console.log(`Listening on port: ${port}`);
+})
+
+// const start = async () => {
+//     try {
+//         app.listen(port, console.log(`Listening on port ${port}`))
         
-    } catch (error) {
-        console.log(error)
-    }
-}
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
-start()
+// start()
