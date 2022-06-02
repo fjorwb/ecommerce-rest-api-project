@@ -2,7 +2,7 @@
   "name": "ecommerce-rest-api-project",
   "version": "1.0.0",
   "description": "project on rest api using node, express and postgres SQL",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
