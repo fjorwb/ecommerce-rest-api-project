@@ -5,6 +5,10 @@ const {Client} = require('pg')
 
 const database = async () => {
 
+    const createDatabase = `CREATE DATABASE IF NOT EXISTS ecomm_nep`
+
+
+
     const usersTableStatement = `
         CREATE TABLE IF NOT EXISTS users(
             id                      INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -80,12 +84,13 @@ const database = async () => {
       host: DB.PGHOST,
       database: DB.PGDATABASE,
       password: DB.PGPASSWORD,
-      port: DB.PGPORT
+      port: DB.PORT
     });
 
     await bd.connect();
 
     // Create tables on database
+    await bd.query(createDatabase);
     await bd.query(usersTableStatement);
     await bd.query(categoriesTableStatement);
     await bd.query(productsTableStatement);

@@ -1,3 +1,5 @@
 /node_modules
 /request
 .env
+.env copy
+Database.sql
