@@ -14,6 +14,7 @@ const {pool} = require('./src/dbConfig')
 
 const passport = require('passport')
 const session = require('express-session')
+const store = new session.MemoryStore()
 const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -59,12 +60,13 @@ app.use(xss())
 app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
+  cookie: {
+    secure: false,
+    maxAge: 24 * 60 * 60 * 1000
+  },
   resave: false,
   saveUninitialized: false,
-  cookie: {
-  secure: false,
-  maxAge: 24 * 60 * 60 * 1000
-}
+  store
 }));
 
 app.use(passport.initialize())
