@@ -8,10 +8,13 @@ const getAllCarts = async (request, response) => {
   try {
     const results = await db.any('SELECT * FROM cart')
 
-    response.status(200).json(results)
-    
+    if(results?.length === 0) {
+      response.status(404).send(`no carts found`)
+    } else {
+        response.status(200).json(results)
+    }
   } catch (error) {
-    throw new Error('Noooooo!!!!')
+      throw new Error('Noooooo!!!!')
   }
 }
 
@@ -43,7 +46,7 @@ const getCartByCartId = async (request, response) => {
   const id = request.params.id
 
   pool.query(`
-  SELECT id, cart_id, user_id, product_id, quantity, date
+  SELECT id, cart_id, user_id, product_id, quantity, price, discount, date
   FROM cart WHERE cart_id = $1`, 
   [id], 
   (error, results) => {
@@ -60,6 +63,16 @@ const getCartByCartId = async (request, response) => {
   )
 }
 
+// const createCart = (request, response) => {
+//   const {
+//     samecart,
+    
+
+//   } = request.body
+
+
+// }
+
 const createCart = async (request, response) => {
   const {
     user_id,
@@ -71,23 +84,45 @@ const createCart = async (request, response) => {
   date = Date.now()
   cart_num = 0
 
-  console.log(user_id, product_id, quantity, date )
+  let price = 0
+  let discount = 0
 
-  if(!samecart) {
+  //charge price & discount from products
   try {
-    const cart = await db.one('SELECT cart_id FROM cart ORDER BY cart_id DESC LIMIT 1')
+    const statement = (`SELECT price, discount FROM products WHERE product_id = $1`)
+    const values = [product_id]
 
-    console.log(cart);
+    const temp = await db.any(statement, values)
 
-    if(cart?.length === 0) {
-      cart_num = 1
-    } else {
-      cart_num = Number(cart.cart_id) +1
-    }
-    
-  } catch (error) {
-    cart_num = 1
+    console.log('fdsahfkhasdfjhakdsjfhkjadshfjlkadsf',temp);
+
+    price = temp[0].price
+    discount = temp[0].discount
+
+    console.log(price, discount);
+
+} catch (error) {
+    throw error
   }
+
+  console.log(user_id, product_id, quantity, date, price, discount)
+
+  //check if is a new cart
+  if(!samecart) {
+    try {
+      const cart = await db.one('SELECT cart_id FROM cart ORDER BY cart_id DESC LIMIT 1')
+
+      console.log(cart);
+
+      if(cart?.length === 0) {
+        cart_num = 1
+      } else {
+        cart_num = Number(cart.cart_id) +1
+      }
+      
+    } catch (error) {
+        cart_num = 1
+    }
  } else {
     const cart = await db.one('SELECT cart_id FROM cart ORDER BY cart_id DESC LIMIT 1')
       cart_num = Number(cart.cart_id)
@@ -114,25 +149,25 @@ const createCart = async (request, response) => {
 
       if(res2?.length > 0) {
         console.log(res2)
-        const stat3 = (`UPDATE cart SET quantity = $1, date = $2 
-                        WHERE cart_id = $3 AND product_id = $4`)
-        const valu3 = [quantity, date, cart_id, product_id]
+        const stat3 = (`UPDATE cart SET quantity = $1, price = $2, discount = $3, date = $4 
+                        WHERE cart_id = $5 AND product_id = $6`)
+        const valu3 = [quantity, price, discount, date, cart_id, product_id]
 
         const res3 = db.manyOrNone(stat3, valu3)
 
         response.status(200).send(`cart with Id: ${cart_id} updated`)
 
       } else {
-        pool.query(`INSERT INTO cart (cart_id, user_id, product_id, quantity, date) 
-                    VALUES ($1, $2, $3, $4, $5)`,
-                    [cart_id, user_id, product_id, quantity, date])
+        pool.query(`INSERT INTO cart (cart_id, user_id, product_id, quantity, price, discount, date) 
+                    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                    [cart_id, user_id, product_id, quantity, price, discount, date])
 
         response.status(201).send(`product added to cart with Id: ${cart_id}`)
       }
     } else {
-        pool.query(`INSERT INTO cart (cart_id, user_id, product_id, quantity, date) 
-                    VALUES ($1, $2, $3, $4, $5)`,
-                    [cart_id, user_id, product_id, quantity, date])
+        pool.query(`INSERT INTO cart (cart_id, user_id, product_id, quantity, price, discount, date) 
+                    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                    [cart_id, user_id, product_id, quantity, price, discount, date])
 
         response.status(201).send(`cart with Id: ${cart_id} created`)
     }

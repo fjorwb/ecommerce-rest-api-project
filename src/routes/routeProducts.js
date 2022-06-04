@@ -6,6 +6,6 @@ const {getProducts, getProductById, getProductByCategoryId, createProduct, updat
 
 routerProducts.route('/').get(getProducts).post(createProduct)
 routerProducts.route('/:id').get(getProductById).put(updateProduct).delete(deleteProduct)
-routerProducts.route('/category/:id').get(getProductByCategoryId)
+routerProducts.route('/category/:category_id').get(getProductByCategoryId)
 
 module.exports = routerProducts

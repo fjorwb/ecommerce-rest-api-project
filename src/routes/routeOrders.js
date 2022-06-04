@@ -6,6 +6,6 @@ const {getAllOrders, getOrderById, getOrdersByOrderId, createOrder, updateOrder,
 
 routerOrders.route('/').get(getAllOrders).post(createOrder).put(updateOrder)
 routerOrders.route('/:id').get(getOrderById).delete(deleteOrder)
-routerOrders.route('/order/:id').get(getOrdersByOrderId)
+routerOrders.route('/order/:order_id').get(getOrdersByOrderId)
 
 module.exports = routerOrders

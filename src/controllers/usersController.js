@@ -1,4 +1,5 @@
 const {pool} = require('../dbConfig')
+const {db} = require('../dbConfig')
 
 // get all users
 const getAllUsers = (request, response) => {
@@ -11,15 +12,28 @@ const getAllUsers = (request, response) => {
 }
 
 // get an user by id
-const getUserById = (request, response) => {
+const getUserById = async (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
+  try {
+    const statement = `SELECT * FROM users WHERE id = $1`
+    const values = [id]
+
+    const temp = await db.any(statement, values)
+
+    if(temp?.length === 0) {
+      return response.status(404).send(`no user found with id:${id}`)
+    } else {
+        pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+          if (error) {
+            throw error
+          }
+          response.status(200).json(results.rows)
+        })
     }
-    response.status(200).json(results.rows)
-  })
+  } catch (error) {
+      throw error    
+  }
 }
 
 // update user

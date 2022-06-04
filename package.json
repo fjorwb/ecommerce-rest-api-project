@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "create-db": "node -r dotenv/config setupDatabase"
   },
   "author": "Fernando Oliveri",
   "license": "ISC",

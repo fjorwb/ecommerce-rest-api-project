@@ -1,8 +1,8 @@
 const {pool} = require('../dbConfig')
-const db = require('../dbConfig')
+const {db} = require('../dbConfig')
 
 const getProducts = (request, response) => {
-  pool.query('SELECT * FROM products ORDER BY id ASC', (error, results) => {
+  pool.query('SELECT * FROM products ORDER BY product_id ASC', (error, results) => {
     if (error) {
       throw error
     }
@@ -10,26 +10,41 @@ const getProducts = (request, response) => {
   })
 }
 
-const getProductById = (request, response) => {
+const getProductById = async (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM products WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
+  try {
+    const statement = (`SELECT * FROM products WHERE id = $1`)
+    const values = [id]
+
+    const temp = await db.any(statement, values)
+
+    if(temp?.length === 0) {
+      return response.status(404).send(`no product found with id: ${id}`)
+    } else {
+        pool.query('SELECT * FROM products WHERE id = $1', [id], (error, results) => {
+          if (error) {
+            throw error
+          }
+          response.status(200).json(results.rows)
+        }) 
     }
-    response.status(200).json(results.rows)
-  })
+  } catch (error) {
+      throw error
+  }
 }
 
 const getProductByCategoryId = (request, response) => {
-  console.log(request.params.id)
+  const category_id = request.params.category_id
 
-  pool.query(`SELECT * FROM products WHERE substring(product_id,1,4) = $1`, [category_id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
+  pool.query(`SELECT * FROM products WHERE substring(product_id,1,4) = $1 ORDER BY product_id`, 
+            [category_id], 
+            (error, results) => {
+              if (error) {
+                throw error
+              }
+              response.status(200).json(results.rows)
+            })
 }
 
 const createProduct = async (request, response) => {
@@ -59,46 +74,78 @@ const createProduct = async (request, response) => {
   })
 }
 
-const updateProduct = (request, response) => {
+const updateProduct = async (request, response) => {
   const id = parseInt(request.params.id)
   const { 
       product_id,
-      product_name,
-      product_description,
-      product_price,
-      product_unit,
-      product_img
+      name,
+      description,
+      unit,
+      price,
+      discount,
+      img
     } = request.body
 
-  pool.query(
-    'UPDATE Products SET product_id = $1, product_name = $2, product_description = $3, product_price = $4, product_unit = $5, product_img = $6 WHERE id = $7', 
-    [
-      product_id,
-      product_name,
-      product_description,
-      product_price,
-      product_unit,
-      product_img,
-      id
-    ],
-    (error, results) => {
+    if(!id) {
+      return response.status(400).send(`please enter a valid id`)
+    }
+
+    try {
+      const statement = ('SELECT * FROM products WHERE id = $1')
+      const values = [id]
+
+      const temp = await db.any(statement, values)
+      if(temp?.length === 0) {
+        return response.status(404).send(`no product found with id:${id}`)
+      } else {
+          pool.query(
+            'UPDATE products SET product_id = $1, name = $2, description = $3, unit = $4, price = $5, discount = $6, img = $7 WHERE id = $8', 
+            [
+              product_id,
+              name,
+              description,
+              unit,
+              price,
+              discount,
+              img,
+              id
+            ],
+            (error, results) => {
+              if (error) {
+                throw error
+              }
+              response.status(200).send(`Product modified with ID: ${id}`)
+            }
+          )
+      }
+    } catch (error) {
+      throw error
+    }
+}
+
+const deleteProduct = async (request, response) => {
+  const id = parseInt(request.params.id)
+
+  try {
+    const statement = `(SELECT * from products WHERE id = $1)`
+    const values = [id]
+
+    const data = await db.any(statement, values)
+
+    if(data?.length === 0) {
+      return response.status(404).send(`not product found with id:${id}`)
+    }
+
+    pool.query('DELETE FROM products WHERE id = $1', [id], (error, results) => {
       if (error) {
         throw error
       }
-      response.status(200).send(`Product modified with ID: ${id}`)
-    }
-  )
-}
 
-const deleteProduct = (request, response) => {
-  const id = parseInt(request.params.id)
-
-  pool.query('DELETE FROM Products WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).send(`Product deleted with ID: ${id}`)
-  })
+      return response.status(200).send(`Product deleted with ID: ${id}`)
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 module.exports = {
