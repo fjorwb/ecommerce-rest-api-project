@@ -59,7 +59,7 @@ app.use(xss())
 
 app.use(flash())
 app.use(session({
-  store: new (require('connect-pg-simple')(session))(),
+  store: new (require('connect-pg-simple')(session)),
   secret: process.env.SESSION_SECRET,
   cookie: {
     secure: false,
