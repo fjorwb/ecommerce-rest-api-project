@@ -7,7 +7,6 @@
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
-    "build": "node build.js",
     "create-db": "node -r dotenv/config setupDatabase",
     "eslint": "eslint ."
   },
