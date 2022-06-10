@@ -1,15 +1,12 @@
 require('dotenv').config()
-const {DB} = require('./config')
+const { DB } = require('./config')
 
-const {Client} = require('pg')
+const { Client } = require('pg')
 
 const database = async () => {
+  const createDatabase = 'CREATE DATABASE IF NOT EXISTS ecomm_nep'
 
-    const createDatabase = `CREATE DATABASE IF NOT EXISTS ecomm_nep`
-
-
-
-    const usersTableStatement = `
+  const usersTableStatement = `
         CREATE TABLE IF NOT EXISTS users(
             id                      INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
             user_id                 VARCHAR(6)      NOT NULL,
@@ -19,7 +16,7 @@ const database = async () => {
         )
     `
 
-    const categoriesTableStatement = `
+  const categoriesTableStatement = `
         CREATE TABLE IF NOT EXISTS categories(
             id                      INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
             category_id             VARCHAR(4)      NOT NULL,
@@ -28,7 +25,7 @@ const database = async () => {
         )
     `
 
-    const productsTableStatement = `
+  const productsTableStatement = `
         CREATE TABLE IF NOT EXISTS products (
             id                      INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
             product_id              VARCHAR(9)      NOT NULL,
@@ -41,7 +38,7 @@ const database = async () => {
         )
     `
 
-    const cartTableStatement = `
+  const cartTableStatement = `
         CREATE TABLE IF NOT EXISTS cart (
             id                      BIGINT          PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
             cart_id                 VARCHAR(6)      NOT NULL,
@@ -52,7 +49,7 @@ const database = async () => {
         )
     `
 
-    const ordersTableStatement = `
+  const ordersTableStatement = `
         CREATE TABLE IF NOT EXISTS orders (
             id                      BIGINT          PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
             order_id                VARCHAR(6)      NOT NULL,
@@ -68,7 +65,7 @@ const database = async () => {
         )
     `
 
-    const accountsTableStatement = `
+  const accountsTableStatement = `
         CREATE TABLE IF NOT EXISTS accounts (
             id                      INT             PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
             account_id              VARCHAR(10)     NOT NULL,
@@ -78,32 +75,30 @@ const database = async () => {
         )
     `
 
-    try {
+  try {
     const bd = new Client({
       user: DB.PGUSER,
       host: DB.PGHOST,
       database: DB.PGDATABASE,
       password: DB.PGPASSWORD,
       port: DB.PORT
-    });
+    })
 
-    await bd.connect();
+    await bd.connect()
 
     // Create tables on database
-    await bd.query(createDatabase);
-    await bd.query(usersTableStatement);
-    await bd.query(categoriesTableStatement);
-    await bd.query(productsTableStatement);
-    await bd.query(cartTableStatement);
-    await bd.query(ordersTableStatement);
-    await bd.query(accountsTableStatement);
+    await bd.query(createDatabase)
+    await bd.query(usersTableStatement)
+    await bd.query(categoriesTableStatement)
+    await bd.query(productsTableStatement)
+    await bd.query(cartTableStatement)
+    await bd.query(ordersTableStatement)
+    await bd.query(accountsTableStatement)
 
-    await bd.end();
-
-  } catch(err) {
-    console.log("ERROR CREATING ONE OR MORE TABLES: ", err);
+    await bd.end()
+  } catch (err) {
+    console.log('ERROR CREATING ONE OR MORE TABLES: ', err)
   }
 }
 
 database()
-

@@ -2,7 +2,7 @@
 const express = require('express')
 const routerCheckout = express.Router()
 
-const {Checkout} = require('../controllers/checkoutController')
+const { Checkout } = require('../controllers/checkoutController')
 
 routerCheckout.route('/').get(Checkout)
 

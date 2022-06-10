@@ -1,4 +1,5 @@
-const {pool} = require('../dbConfig')
+/* eslint-disable camelcase */
+const { pool } = require('../dbConfig')
 
 const getCategories = (request, response) => {
   pool.query('SELECT * FROM categories ORDER BY id ASC', (error, results) => {
@@ -15,7 +16,7 @@ const getCategoryById = (request, response) => {
     if (error) {
       throw error
     }
-    if(results.rows.length === 0) {
+    if (results.rows.length === 0) {
       response.send('No category with this id')
     } else {
       response.status(200).json(results.rows)
@@ -24,11 +25,11 @@ const getCategoryById = (request, response) => {
 }
 
 const createCategory = async (request, response) => {
-  const { 
-      category_id,
-      category_name,
-      category_description
-    } = request.body
+  const {
+    category_id,
+    category_name,
+    category_description
+  } = request.body
 
   await pool.query('INSERT INTO categories (category_id, category_name, category_description) VALUES ($1, $2, $3) RETURNING *', [category_id, category_name, category_description], (error, results) => {
     if (error) {
@@ -42,19 +43,22 @@ const updateCategory = (request, response) => {
   const id = request.params.id
 
   pool.query('SELECT * FROM categories WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
 
-    if(results.rows.length === 0) {
+    if (results.rows.length === 0) {
       response.status(400).send(`no category with Id: ${id}`)
     } else {
-      const { 
+      const {
         category_id,
         category_name,
         category_description
       } = request.body
 
-      pool.query('UPDATE categories SET category_id = $1, category_name = $2, category_description = $3 WHERE id = $4', 
+      pool.query('UPDATE categories SET category_id = $1, category_name = $2, category_description = $3 WHERE id = $4',
         [
-          category_id, 
+          category_id,
           category_name,
           category_description,
           id
@@ -74,20 +78,22 @@ const deleteCategory = (request, response) => {
   const id = request.params.id
 
   pool.query('SELECT * FROM categories WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
 
-    if(results.rows.length === 0) {
+    if (results.rows.length === 0) {
       response.status(400).send(`no category with Id: ${id}`)
     } else {
-
       pool.query('DELETE FROM categories WHERE id = $1', [id], (error, results) => {
-              if (error) {
-                throw error
-              }
-              response.status(400).send(`category deleted with Id: ${id}`)
-            }
-          )
+        if (error) {
+          throw error
+        }
+        response.status(400).send(`category deleted with Id: ${id}`)
       }
+      )
     }
+  }
   )
 }
 
@@ -96,5 +102,5 @@ module.exports = {
   getCategoryById,
   createCategory,
   updateCategory,
-  deleteCategory,
+  deleteCategory
 }

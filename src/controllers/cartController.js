@@ -1,44 +1,37 @@
-const {pool} = require('../dbConfig')
-const {db} = require('../dbConfig')
+/* eslint-disable camelcase */
+const { pool } = require('../dbConfig')
+const { db } = require('../dbConfig')
 
 const Convert = require('../helpers/tableCodes')
 
+let cart_id = ''
 
 const getAllCarts = async (request, response) => {
   try {
     const results = await db.any('SELECT * FROM cart')
 
-    if(results?.length === 0) {
-      response.status(404).send(`no carts found`)
+    if (results?.length === 0) {
+      response.status(404).send('no carts found')
     } else {
-        response.status(200).json(results)
+      response.status(200).json(results)
     }
   } catch (error) {
-      throw new Error('Noooooo!!!!')
+    throw new Error('Noooooo!!!!')
   }
 }
 
-// const getAllCarts = (request, response) => {
-//   pool.query('SELECT * FROM cart ORDER BY id ASC', (error, results) => {
-//     if (error) {
-//       throw error
-//     }
-//     response.status(200).json(results.rows)
-//   })
-// }
-
 const getCartById = (request, response) => {
   const id = parseInt(request.params.id)
-    pool.query('SELECT * FROM cart WHERE id = $1', [id], (error, results) => {
-      if(error) {
-        throw error
-      }
-      if(results.rows.length === 0) {
-        response.status(404).send(`there is not cart with Id: ${id}`)
-      } else {
-        response.status(200).json(results.rows)
-      }
+  pool.query('SELECT * FROM cart WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
     }
+    if (results.rows.length === 0) {
+      response.status(404).send(`there is not cart with Id: ${id}`)
+    } else {
+      response.status(200).json(results.rows)
+    }
+  }
   )
 }
 
@@ -47,31 +40,21 @@ const getCartByCartId = async (request, response) => {
 
   pool.query(`
   SELECT id, cart_id, user_id, product_id, quantity, price, discount, date
-  FROM cart WHERE cart_id = $1`, 
-  [id], 
+  FROM cart WHERE cart_id = $1`,
+  [id],
   (error, results) => {
     if (error) {
       throw error
     }
 
-    if(results.rows.length === 0) {
+    if (results.rows.length === 0) {
       response.status(404).send(`there is not cart with Id: ${id}`)
     } else {
-        response.status(200).json(results.rows)
-      }
+      response.status(200).json(results.rows)
     }
+  }
   )
 }
-
-// const createCart = (request, response) => {
-//   const {
-//     samecart,
-    
-
-//   } = request.body
-
-
-// }
 
 const createCart = async (request, response) => {
   const {
@@ -81,144 +64,138 @@ const createCart = async (request, response) => {
     samecart
   } = request.body
 
-  date = Date.now()
-  cart_num = 0
+  const date = Date.now()
+  let cart_num = 0
 
   let price = 0
   let discount = 0
 
-  //charge price & discount from products
-  try {
-    const statement = (`SELECT price, discount FROM products WHERE product_id = $1`)
-    const values = [product_id]
+  let statement = ''
+  let values = []
 
-    const temp = await db.any(statement, values)
+  // charge price & discount from products
+  statement = ('SELECT price, discount FROM products WHERE product_id = $1')
+  values = [product_id]
 
-    console.log('fdsahfkhasdfjhakdsjfhkjadshfjlkadsf',temp);
+  const temp = await db.any(statement, values)
 
-    price = temp[0].price
-    discount = temp[0].discount
+  console.log('fdsahfkhasdfjhakdsjfhkjadshfjlkadsf', temp)
 
-    console.log(price, discount);
+  price = temp[0].price
+  discount = temp[0].discount
 
-} catch (error) {
-    throw error
-  }
+  console.log(price, discount)
 
   console.log(user_id, product_id, quantity, date, price, discount)
 
-  //check if is a new cart
-  if(!samecart) {
+  // check if is a new cart
+  if (!samecart) {
     try {
       const cart = await db.one('SELECT cart_id FROM cart ORDER BY cart_id DESC LIMIT 1')
 
-      console.log(cart);
+      console.log(cart)
 
-      if(cart?.length === 0) {
+      if (cart?.length === 0) {
         cart_num = 1
       } else {
-        cart_num = Number(cart.cart_id) +1
+        cart_num = Number(cart.cart_id) + 1
       }
-      
     } catch (error) {
-        cart_num = 1
+      cart_num = 1
     }
- } else {
+  } else {
     const cart = await db.one('SELECT cart_id FROM cart ORDER BY cart_id DESC LIMIT 1')
-      cart_num = Number(cart.cart_id)
+    cart_num = Number(cart.cart_id)
   }
 
-  console.log('dsadads',cart_num)
+  console.log('dsadads', cart_num)
 
   cart_id = Convert(cart_num)
   console.log(cart_id)
 
-  try {
-    const statement = ('SELECT * FROM cart WHERE cart_id = $1')
-    const values = [cart_id]
+  statement = ('SELECT * FROM cart WHERE cart_id = $1')
+  values = [cart_id]
 
-    const results = await db.manyOrNone(statement, values)
+  const results = await db.manyOrNone(statement, values)
 
-    console.log(results);
+  console.log(results)
 
-    if(results?.length > 0) {
-      const stat2 = ('SELECT * FROM cart WHERE cart_id = $1 AND product_id = $2')
-      const valu2 = [cart_id, product_id]
+  if (results?.length > 0) {
+    const stat2 = ('SELECT * FROM cart WHERE cart_id = $1 AND product_id = $2')
+    const valu2 = [cart_id, product_id]
 
-      const res2 = await db.manyOrNone(stat2, valu2)
+    const res2 = await db.manyOrNone(stat2, valu2)
 
-      if(res2?.length > 0) {
-        console.log(res2)
-        const stat3 = (`UPDATE cart SET quantity = $1, price = $2, discount = $3, date = $4 
+    if (res2?.length > 0) {
+      console.log(res2)
+      const stat3 = (`UPDATE cart SET quantity = $1, price = $2, discount = $3, date = $4 
                         WHERE cart_id = $5 AND product_id = $6`)
-        const valu3 = [quantity, price, discount, date, cart_id, product_id]
+      const valu3 = [quantity, price, discount, date, cart_id, product_id]
 
-        const res3 = db.manyOrNone(stat3, valu3)
+      const res3 = db.manyOrNone(stat3, valu3)
 
-        response.status(200).send(`cart with Id: ${cart_id} updated`)
-
-      } else {
-        pool.query(`INSERT INTO cart (cart_id, user_id, product_id, quantity, price, discount, date) 
-                    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-                    [cart_id, user_id, product_id, quantity, price, discount, date])
-
-        response.status(201).send(`product added to cart with Id: ${cart_id}`)
+      if (res3?.length === 0) {
+        response.status(400).send('no cart updated')
       }
+
+      response.status(200).send(`cart with Id: ${cart_id} updated`)
     } else {
-        pool.query(`INSERT INTO cart (cart_id, user_id, product_id, quantity, price, discount, date) 
+      pool.query(`INSERT INTO cart (cart_id, user_id, product_id, quantity, price, discount, date) 
                     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-                    [cart_id, user_id, product_id, quantity, price, discount, date])
+      [cart_id, user_id, product_id, quantity, price, discount, date])
 
-        response.status(201).send(`cart with Id: ${cart_id} created`)
+      response.status(201).send(`product added to cart with Id: ${cart_id}`)
     }
-    return null
+  } else {
+    pool.query(`INSERT INTO cart (cart_id, user_id, product_id, quantity, price, discount, date) 
+                    VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+    [cart_id, user_id, product_id, quantity, price, discount, date])
 
-  } catch (error) {
-    throw error
+    response.status(201).send(`cart with Id: ${cart_id} created`)
   }
+  return null
 }
 
 const updateCart = async (request, response) => {
   const {
-    cart_id, 
+    cart_id,
     product_id,
     quantity
   } = request.body
 
   const date = Date.now()
 
-  const statement = (`SELECT * FROM cart WHERE cart_id = $1 AND product_id = $2`)
+  const statement = ('SELECT * FROM cart WHERE cart_id = $1 AND product_id = $2')
   const values = [cart_id, product_id]
 
   const results = await db.any(statement, values)
 
-  if(results?.length === 0) {
+  if (results?.length === 0) {
     response.status(404).send(`there is not cart with id_cart: ${cart_id} and product_id: ${product_id}`)
   } else {
     pool.query(`UPDATE cart SET quantity = $1, date = $2 
                 WHERE cart_id = $3 AND product_id = $4`,
-                [quantity, date, cart_id, product_id], 
-                (error, results) => {
-                  if (error) {
-                    throw error
-                  }
-                  response.status(200).send(`cart with cart_id: ${cart_id} updated`)
-                }
-              )
+    [quantity, date, cart_id, product_id],
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).send(`cart with cart_id: ${cart_id} updated`)
+    }
+    )
   }
 }
-
 
 // const updateCart = (request, response) => {
 //   const {prm1, prm2} = JSON.parse(request.params.ix)
 
 //   const {quantity} = request.body
-  
+
 //   const date = Date.now()
 
-//   pool.query(`UPDATE cart SET quantity = $1, date = $2 
-//               WHERE cart_id = $3 AND product_id = $4 RETURNING *`, 
-//               [quantity, date, prm1, prm2], 
+//   pool.query(`UPDATE cart SET quantity = $1, date = $2
+//               WHERE cart_id = $3 AND product_id = $4 RETURNING *`,
+//               [quantity, date, prm1, prm2],
 //               (error, results ) => {
 //       if (error) {
 //         throw error
@@ -242,20 +219,15 @@ const deleteCart = (request, response) => {
 
 const getCartById2 = async (request, response) => {
   const id = request.params.id
-  try {
-    const statement = ('SELECT * FROM cart WHERE id = $1')
-    const values = [id]
+  const statement = ('SELECT * FROM cart WHERE id = $1')
+  const values = [id]
 
-    const results = await db.manyOrNone(statement, values)
+  const results = await db.manyOrNone(statement, values)
 
-    if(results?.length === 0) {
-        response.status(404).send(`there is not cart with Id: ${id}`)
-    } else {
-        response.status(200).send(results)
-    }
-
-  } catch (error) {
-    throw error
+  if (results?.length === 0) {
+    response.status(404).send(`there is not cart with Id: ${id}`)
+  } else {
+    response.status(200).send(results)
   }
 }
 

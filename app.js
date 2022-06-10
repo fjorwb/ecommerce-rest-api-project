@@ -9,21 +9,22 @@ const rateLimiter = require('express-rate-limit')
 
 const express = require('express')
 
-const {db} = require('./src/dbConfig')
-const {pool} = require('./src/dbConfig')
+// const { db } = require('./src/dbConfig')
+// const { pool } = require('./src/dbConfig')
 
 const passport = require('passport')
 const session = require('express-session')
-const store = new session.MemoryStore()
+// const store = new session.MemoryStore()
 const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const path = require('path')
+const favicon = require('serve-favicon')
 
 const notFound = require('./src/middlewares/notFound')
 const errorHandler = require('./src/middlewares/errorHandler')
 
 const app = express()
-
 
 const initializePassport = require('./passportConfig')
 initializePassport(passport)
@@ -40,26 +41,25 @@ const routerCart = require('./src/routes/routeCart')
 const routerOrders = require('./src/routes/routeOrders')
 const routerCheckout = require('./src/routes/routeCheckout')
 
-
-//middlewares
+// middlewares
 app.use(express.static('/public'))
-app.use('/css', express.static(__dirname + '/public/css'))
-app.use('/image', express.static(__dirname + '/public/image'))
+app.use('/css', express.static(path.join(__dirname, '/public/css')))
+app.use('/image', express.static(path.join(__dirname, '/public/image')))
+app.use(favicon, express.static(path.join(__dirname, '/public/image')))
 
 app.use(rateLimiter({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100
+  windowMs: 15 * 60 * 1000,
+  max: 100
 }))
 app.use(morgan('tiny'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(helmet())
 app.use(cors())
 app.use(xss())
 
 app.use(flash())
 app.use(session({
-  store: new (require('connect-pg-simple')(session)),
   secret: process.env.SESSION_SECRET,
   cookie: {
     secure: false,
@@ -67,7 +67,9 @@ app.use(session({
   },
   resave: false,
   saveUninitialized: false,
-}));
+  secure: true,
+  httpOnly: true
+}))
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -82,22 +84,22 @@ app.use('/orders', checkAuthenticated, routerOrders)
 app.use('/checkout', checkAuthenticated, routerCheckout)
 
 app.get('/', checkNotAuthenticated, (req, res) => {
-    res.render('index.ejs')
+  res.render('index.ejs')
 })
 
 // Check Authenticate
-function checkAuthenticated(req, res, next) {
+function checkAuthenticated (req, res, next) {
   if (req.isAuthenticated()) {
-    return next();
+    return next()
   }
   res.redirect('/auth/login')
 }
 
-function checkNotAuthenticated(req, res, next) {
+function checkNotAuthenticated (req, res, next) {
   if (req.isAuthenticated()) {
-    return res.redirect("/");
+    return res.redirect('/')
   }
-  next();
+  next()
 }
 
 app.use(notFound)
@@ -106,12 +108,11 @@ app.use(errorHandler)
 const port = process.env.PORT || 5000
 
 const start = async () => {
-    try {
-        app.listen(port, console.log(`Listening on port ${port}`))
-        
-    } catch (error) {
-        console.log(error)
-    }
+  try {
+    app.listen(port, console.log(`Listening on port ${port}`))
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 start()

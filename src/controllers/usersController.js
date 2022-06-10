@@ -1,5 +1,5 @@
-const {pool} = require('../dbConfig')
-const {db} = require('../dbConfig')
+const { pool } = require('../dbConfig')
+const { db } = require('../dbConfig')
 
 // get all users
 const getAllUsers = (request, response) => {
@@ -15,24 +15,20 @@ const getAllUsers = (request, response) => {
 const getUserById = async (request, response) => {
   const id = parseInt(request.params.id)
 
-  try {
-    const statement = `SELECT * FROM users WHERE id = $1`
-    const values = [id]
+  const statement = 'SELECT * FROM users WHERE id = $1'
+  const values = [id]
 
-    const temp = await db.any(statement, values)
+  const temp = await db.any(statement, values)
 
-    if(temp?.length === 0) {
-      return response.status(404).send(`no user found with id:${id}`)
-    } else {
-        pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
-          if (error) {
-            throw error
-          }
-          response.status(200).json(results.rows)
-        })
-    }
-  } catch (error) {
-      throw error    
+  if (temp?.length === 0) {
+    return response.status(404).send(`no user found with id:${id}`)
+  } else {
+    pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).json(results.rows)
+    })
   }
 }
 
@@ -41,8 +37,8 @@ const updateUser = (request, response) => {
   const id = parseInt(request.params.id)
   const { name, email } = request.body
 
-  if(!name || !email) {
-  return response.status(400).send('request.body is missing/incomplete. Check request.body')
+  if (!name || !email) {
+    return response.status(400).send('request.body is missing/incomplete. Check request.body')
   }
 
   pool.query(
@@ -89,5 +85,5 @@ module.exports = {
   getUserById,
   getUserByUserName,
   updateUser,
-  deleteUser,
+  deleteUser
 }

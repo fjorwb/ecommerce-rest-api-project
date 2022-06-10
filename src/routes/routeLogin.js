@@ -1,7 +1,7 @@
 const express = require('express')
 const routerOrders = express.Router()
 
-const {getAllOrders, getOrderById, getOrdersByOrderId, createOrder, updateOrder, deleteOrder} = require('../controllers/ordersController')
+const { getAllOrders, getOrderById, getOrdersByOrderId, createOrder, updateOrder, deleteOrder } = require('../controllers/ordersController')
 
 routerOrders.route('/').get(getAllOrders).post(createOrder)
 routerOrders.route('/:id').get(getOrderById).put(updateOrder).delete(deleteOrder)
