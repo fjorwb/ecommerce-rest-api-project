@@ -45,7 +45,7 @@ const routerCheckout = require('./src/routes/routeCheckout')
 app.use(express.static('/public'))
 app.use('/css', express.static(path.join(__dirname, '/public/css')))
 app.use('/image', express.static(path.join(__dirname, '/public/image')))
-// app.use(favicon, path.join(__dirname, '/public/image', 'favicon.ico'))
+app.use(favicon(path.join(__dirname, '/public/image', 'favicon.ico')))
 
 app.use(rateLimiter({
   windowMs: 15 * 60 * 1000,

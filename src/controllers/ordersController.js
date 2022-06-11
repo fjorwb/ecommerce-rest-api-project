@@ -43,8 +43,8 @@ const getOrdersByOrderId = (request, response) => {
 const createOrder = async (request, response) => {
   const cart_id = request.body.cart_id
 
-  const statement = ('SELECT * FROM cart WHERE cart_id = $1')
-  const values = [cart_id]
+  let statement = ('SELECT * FROM cart WHERE cart_id = $1')
+  let values = [cart_id]
 
   const temp = await db.any(statement, values)
 
@@ -61,12 +61,14 @@ const createOrder = async (request, response) => {
 
     order_id = Convert(order_num)
 
-    const statement = ('SELECT * FROM cart WHERE cart_id = $1')
-    const values = [cart_id]
+    statement = ('SELECT * FROM cart WHERE cart_id = $1')
+    values = [cart_id]
 
-    const temp = await db.any(statement, values)
+    const temp1 = await db.any(statement, values)
 
-    for (let i = 0; i < temp.length; i++) {
+    // create order --> then an account will be created with order details
+
+    for (let i = 0; i < temp1.length; i++) {
       pool.query(`INSERT INTO orders (
               order_id, 
               cart_id,
@@ -82,15 +84,33 @@ const createOrder = async (request, response) => {
       [
         order_id,
         cart_id,
-        temp[i].user_id,
-        temp[i].product_id,
-        temp[i].quantity,
-        temp[i].price,
-        temp[i].discount,
+        temp1[i].user_id,
+        temp1[i].product_id,
+        temp1[i].quantity,
+        temp1[i].price,
+        temp1[i].discount,
         tax,
         date
       ])
     }
+
+    let amount = 0
+    for (let i = 0; i < temp1.length; i++) {
+      amount = amount + (temp1[i].quantity * temp1[i].price * (1 - temp1[i].discount) * (1 + tax))
+    }
+
+    const account_id = temp1[0].user_id
+
+    pool.query(`INSERT INTO accounts
+      (account_id, user_id, order_id, amount, date, tax)
+      VALUES($1, $2, $3, $4, $5, $6)`,
+    [account_id, temp1[0].user_id, order_id, amount, date, tax],
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      console.log(results.rows)
+    })
 
     response.status(201).send(`order created with id: ${order_id}`)
   }
@@ -139,7 +159,6 @@ const updateOrder = async (request, response) => {
 
 const deleteOrder = (request, response) => {
   const id = request.params.id
-  console.log(id)
 
   pool.query('DELETE FROM orders WHERE order_id = $1', [id], (error, results) => {
     if (error) {

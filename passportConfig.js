@@ -3,25 +3,21 @@ const { pool } = require('./src/dbConfig')
 const bcrypt = require('bcrypt')
 
 function initialize (passport) {
-  console.log('Initialized')
-
   const authenticateUser = (email, password, done) => {
-    console.log(email, password)
     pool.query(
       'SELECT * FROM users WHERE email = $1',
       [email],
-      (err, results) => {
-        if (err) {
-          throw err
+      (error, results) => {
+        if (error) {
+          throw error
         }
-        console.log(results.rows)
 
         if (results.rows.length > 0) {
           const user = results.rows[0]
 
-          bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) {
-              console.log(err)
+          bcrypt.compare(password, user.password, (error, isMatch) => {
+            if (error) {
+              throw error
             }
             if (isMatch) {
               return done(null, user)
@@ -55,7 +51,6 @@ function initialize (passport) {
       if (error) {
         return done(error)
       }
-      console.log(`ID is ${results.rows[0].id}`)
       return done(null, results.rows[0])
     })
   })

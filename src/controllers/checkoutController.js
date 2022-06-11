@@ -32,10 +32,7 @@ const Checkout = async (request, response) => {
       order_num = Number(orders.order_id) + 1
     }
 
-    console.log(order_num)
-
     order_id = Convert(order_num)
-    console.log(order_id)
 
     for (let i = 0; i < cart.length; i++) {
       const { product_id, user_id, quantity } = cart[i]

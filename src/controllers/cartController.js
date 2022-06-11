@@ -79,21 +79,13 @@ const createCart = async (request, response) => {
 
   const temp = await db.any(statement, values)
 
-  console.log('fdsahfkhasdfjhakdsjfhkjadshfjlkadsf', temp)
-
   price = temp[0].price
   discount = temp[0].discount
-
-  console.log(price, discount)
-
-  console.log(user_id, product_id, quantity, date, price, discount)
 
   // check if is a new cart
   if (!samecart) {
     try {
       const cart = await db.one('SELECT cart_id FROM cart ORDER BY cart_id DESC LIMIT 1')
-
-      console.log(cart)
 
       if (cart?.length === 0) {
         cart_num = 1
@@ -108,17 +100,12 @@ const createCart = async (request, response) => {
     cart_num = Number(cart.cart_id)
   }
 
-  console.log('dsadads', cart_num)
-
   cart_id = Convert(cart_num)
-  console.log(cart_id)
 
   statement = ('SELECT * FROM cart WHERE cart_id = $1')
   values = [cart_id]
 
   const results = await db.manyOrNone(statement, values)
-
-  console.log(results)
 
   if (results?.length > 0) {
     const stat2 = ('SELECT * FROM cart WHERE cart_id = $1 AND product_id = $2')
@@ -127,7 +114,6 @@ const createCart = async (request, response) => {
     const res2 = await db.manyOrNone(stat2, valu2)
 
     if (res2?.length > 0) {
-      console.log(res2)
       const stat3 = (`UPDATE cart SET quantity = $1, price = $2, discount = $3, date = $4 
                         WHERE cart_id = $5 AND product_id = $6`)
       const valu3 = [quantity, price, discount, date, cart_id, product_id]
@@ -207,7 +193,6 @@ const updateCart = async (request, response) => {
 
 const deleteCart = (request, response) => {
   const id = request.params.id
-  console.log(id)
 
   pool.query('DELETE FROM cart WHERE cart_id = $1', [id], (error, results) => {
     if (error) {

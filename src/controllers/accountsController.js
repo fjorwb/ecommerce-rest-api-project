@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const { pool } = require('../dbConfig')
+const { db } = require('../dbConfig')
 
 const getAccounts = (request, response) => {
   pool.query('SELECT id, account_id, user_id FROM accounts ORDER BY id ASC', (error, results) => {
@@ -26,11 +27,20 @@ const getAccountById = (request, response) => {
   })
 }
 
-const createAccount = (request, response) => {
+const createAccount = async (request, response) => {
   const {
     account_id,
     user_id
   } = request.body
+
+  const statement = 'SELECT * FROM accounts WHERE account_id = $1'
+  const values = [account_id]
+
+  const temp = await db.any(statement, values)
+
+  if (temp?.length === 0) {
+    response.status(404).send(`not account found with account id: ${account_id}`)
+  }
 
   pool.query('SELECT * FROM accounts WHERE account_id = $1', [account_id], (error, results) => {
     if (error) {

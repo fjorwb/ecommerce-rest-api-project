@@ -65,13 +65,12 @@ const registerUser = async (request, response) => {
   user_id = Convert(user_num)
 
   pool.query(
-    'SELECT * FROM users WHERE email = $1', [email], (err, results) => {
-      if (err) {
-        console.log(err)
+    'SELECT * FROM users WHERE email = $1', [email], (error, results) => {
+      if (error) {
+        throw error
       }
 
       if (results.rows.length > 0) {
-        console.log('Email already registered')
         request.flash('error', 'Email already registered')
         response.render('register.ejs', { message: 'Email already registered' })
       } else {

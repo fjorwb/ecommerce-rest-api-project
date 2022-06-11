@@ -96,8 +96,8 @@ const database = async () => {
     await bd.query(accountsTableStatement)
 
     await bd.end()
-  } catch (err) {
-    console.log('ERROR CREATING ONE OR MORE TABLES: ', err)
+  } catch (error) {
+    console.log('Error creating one or more tables: ', error)
   }
 }
 

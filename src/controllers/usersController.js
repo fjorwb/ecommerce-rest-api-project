@@ -67,8 +67,6 @@ const deleteUser = (request, response) => {
 
 // get an user or user by name(first and last name)
 const getUserByUserName = (request, response) => {
-  console.log(request.params.name)
-
   // const {name} = JSON.parse(request.params.name)
   const name = request.params.name
 
