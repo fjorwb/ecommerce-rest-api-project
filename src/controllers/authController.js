@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-const { pool } = require('../dbConfig')
 const { db } = require('../dbConfig')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
@@ -49,7 +48,6 @@ const registerUser = async (request, response) => {
     hashedPassword = await bcrypt.hash(password, 10)
   }
 
-  // check orders for orders_id
   try {
     const users = await db.one('SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1')
 
@@ -64,32 +62,26 @@ const registerUser = async (request, response) => {
 
   user_id = Convert(user_num)
 
-  pool.query(
-    'SELECT * FROM users WHERE email = $1', [email], (error, results) => {
-      if (error) {
-        throw error
-      }
+  const statement = 'SELECT * FROM users WHERE email = $1'
+  const values = [email]
 
-      if (results.rows.length > 0) {
-        request.flash('error', 'Email already registered')
-        response.render('register.ejs', { message: 'Email already registered' })
-      } else {
-        const name = `${firstname} ${lastname}`
-        pool.query(
-          `INSERT INTO users (user_id, name, email, password)
-              VALUES ($1, $2, $3, $4)`,
-          [user_id, name, email, hashedPassword],
-          (error, results) => {
-            if (error) {
-              throw error
-            }
-            request.flash('success_msg', 'You are now registered. Please log in')
-            response.redirect('/auth/login')
-          }
-        )
-      }
-    }
-  )
+  const results = await db.any(statement, values)
+
+  if (results.length > 0) {
+    request.flash('error', 'Email already registered')
+    response.render('register.ejs', { message: 'Email already registered' })
+  } else {
+    const name = `${firstname} ${lastname}`
+
+    const statement = `INSERT INTO users (user_id, name, email, password)
+              VALUES ($1, $2, $3, $4)`
+    const values = [user_id, name, email, hashedPassword]
+
+    await db.any(statement, values)
+
+    request.flash('success_msg', 'You are now registered. Please log in')
+    response.redirect('/auth/login')
+  }
 }
 
 const loginUser = passport.authenticate('local', {

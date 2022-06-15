@@ -12,6 +12,8 @@ const express = require('express')
 // const { db } = require('./src/dbConfig')
 // const { pool } = require('./src/dbConfig')
 
+const { checkAuthenticated } = require('./src/middlewares/authentication') // checkNotAuthenticated?
+
 const passport = require('passport')
 const session = require('express-session')
 // const store = new session.MemoryStore()
@@ -83,24 +85,9 @@ app.use('/cart', checkAuthenticated, routerCart)
 app.use('/orders', checkAuthenticated, routerOrders)
 app.use('/checkout', checkAuthenticated, routerCheckout)
 
-app.get('/', checkNotAuthenticated, (req, res) => {
+app.get('/', (req, res) => {
   res.render('index.ejs')
 })
-
-// Check Authenticate
-function checkAuthenticated (req, res, next) {
-  if (req.isAuthenticated()) {
-    return next()
-  }
-  res.redirect('/auth/login')
-}
-
-function checkNotAuthenticated (req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/')
-  }
-  next()
-}
 
 app.use(notFound)
 app.use(errorHandler)

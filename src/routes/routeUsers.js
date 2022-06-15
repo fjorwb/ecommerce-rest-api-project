@@ -2,10 +2,17 @@
 const express = require('express')
 const routerUsers = express.Router()
 
+const authorization = require('../middlewares/authorization')
+
 const { getAllUsers, getUserById, getUserByUserName, updateUser, deleteUser } = require('../controllers/usersController')
 
-routerUsers.route('/').get(getAllUsers)
-routerUsers.route('/:id').get(getUserById).put(updateUser).delete(deleteUser)
-routerUsers.route('/user/:name').get(getUserByUserName)
+routerUsers.route('/')
+  .get(authorization(['admin']), getAllUsers)
+routerUsers.route('/:id')
+  .get(authorization(['admin']), getUserById)
+  .put(authorization(['admin']), updateUser)
+  .delete(authorization(['admin']), deleteUser)
+routerUsers.route('/user/:name')
+  .get(authorization(['admin']), getUserByUserName)
 
 module.exports = routerUsers

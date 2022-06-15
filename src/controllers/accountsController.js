@@ -1,117 +1,107 @@
 /* eslint-disable camelcase */
-const { pool } = require('../dbConfig')
 const { db } = require('../dbConfig')
 
-const getAccounts = (request, response) => {
-  pool.query('SELECT id, account_id, user_id FROM accounts ORDER BY id ASC', (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
+const AccountNumber = require('../helpers/accountCode')
+
+const date = Date.now()
+
+const getAccounts = async (request, response) => {
+  const statement = 'SELECT id, account_id, user_id FROM accounts ORDER BY id ASC'
+
+  const results = await db.any(statement)
+
+  if (results?.length === 0) {
+    response.status(404).send('not account found')
+  } else {
+    response.status(200).json(results)
+  }
 }
 
-const getAccountById = (request, response) => {
+const getAccountById = async (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM accounts WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
+  const statement = 'SELECT * FROM accounts WHERE id = $1'
+  const values = [id]
 
-    if (results.rows.length === 0) {
-      response.status(404).send(`there is not account with Id: ${id}`)
-    } else {
-      response.status(200).json(results.rows)
-    }
-  })
+  const results = await db.any(statement, values)
+
+  if (results?.length === 0) {
+    response.status(404).send(`not account found with id: ${id}`)
+  } else {
+    response.status(200).json(results)
+  }
 }
 
 const createAccount = async (request, response) => {
   const {
-    account_id,
-    user_id
+    user_id,
+    acco_type,
+    amount
   } = request.body
 
-  const statement = 'SELECT * FROM accounts WHERE account_id = $1'
-  const values = [account_id]
+  const tax = 0
+
+  const statement = 'SELECT * FROM accounts WHERE user_id = $1'
+  const values = [user_id]
 
   const temp = await db.any(statement, values)
 
   if (temp?.length === 0) {
-    response.status(404).send(`not account found with account id: ${account_id}`)
-  }
+    response.status(404).send('not account created. create user first')
+  } else {
+    const type = AccountNumber(acco_type)
+    const account_id = user_id + '-' + type
 
-  pool.query('SELECT * FROM accounts WHERE account_id = $1', [account_id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    if (results.rows.length > 0) {
-      response.status(400).send(`An account exists with account_id: ${account_id}`)
-    } else {
-      pool.query('INSERT INTO accounts (account_id, user_id) VALUES ($1, $2) RETURNING *', [account_id, user_id], (error, results) => {
-        if (error) {
-          throw error
-        }
-        response.status(201).send(`Account successfully added with ID: ${results.rows[0].id}`)
-      })
-    }
+    const statement = `INSERT INTO accounts (account_id, user_id, acco_type, amount, tax, date)
+                       VALUES($1, $2, $3, $4, $5, $6)`
+    const values = [account_id, user_id, acco_type, amount * (1 + tax), tax, date]
+
+    await db.any(statement, values)
+
+    response.status(201).send(`account created with id: ${account_id}`)
   }
-  )
 }
 
-const updateAccount = (request, response) => {
+const updateAccount = async (request, response) => {
   const id = parseInt(request.params.id)
-  const {
-    account_id,
-    user_id
-  } = request.body
+  const { amount } = request.body
 
-  pool.query('SELECT * FROM accounts WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    if (results.rows.length === 0) {
-      response.status(404).send(`there is not account with Id: ${id}`)
-    } else {
-      pool.query(
-        'UPDATE accounts SET account_id = $1, user_id = $2 WHERE id = $3',
-        [
-          account_id,
-          user_id,
-          id
-        ],
-        (error, results) => {
-          if (error) {
-            throw error
-          }
-          response.status(200).send(`Account modified with ID: ${id}`)
-        }
-      )
-    }
+  const statement = 'SELECT * FROM accounts WHERE id = $1'
+  const values = [id]
+
+  const temp = await db.any(statement, values)
+  console.log(temp)
+
+  if (temp?.length === 0) {
+    response.status(404).send(`not account found with id:${id}`)
+  } else {
+    const statement = 'UPDATE accounts SET amount = $1 WHERE id = $2'
+    const values = [amount, id]
+
+    await db.any(statement, values)
+
+    response.status(200).send(`Account updated with ID: ${id}`)
   }
-  )
 }
 
-const deleteAccount = (request, response) => {
+const deleteAccount = async (request, response) => {
   const id = parseInt(request.params.id)
 
-  pool.query('SELECT * FROM accounts WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    if (results.rows.length === 0) {
-      response.status(404).send(`there is not account with Id: ${id}`)
-    } else {
-      pool.query('DELETE FROM Accounts WHERE id = $1', [id], (error, results) => {
-        if (error) {
-          throw error
-        }
-        response.status(200).send(`Account deleted with ID: ${id}`)
-      }
-      )
-    }
-  })
+  const statement = 'SELECT * FROM accounts WHERE id = $1'
+  const values = [id]
+
+  const temp = await db.any(statement, values)
+
+  if (temp?.length === 0) {
+    response.status(404).send(`not account found with id: ${id}`)
+  } else {
+    const statement = 'DELETE FROM Accounts WHERE id = $1'
+    const values = [id]
+
+    await db.any(statement, values)
+
+    response.status(200).send(`Account deleted with ID: ${id}`)
+  }
 }
 
 module.exports = {

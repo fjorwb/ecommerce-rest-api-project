@@ -2,10 +2,18 @@
 const express = require('express')
 const routerProducts = express.Router()
 
-const { getProducts, getProductById, getProductByCategoryId, createProduct, updateProduct, deleteProduct } = require('../controllers/productsController')
+const authorization = require('../middlewares/authorization')
 
-routerProducts.route('/').get(getProducts).post(createProduct)
-routerProducts.route('/:id').get(getProductById).put(updateProduct).delete(deleteProduct)
-routerProducts.route('/category/:category_id').get(getProductByCategoryId)
+const { getAllProducts, getProductById, getProductByCategoryId, createProduct, updateProduct, deleteProduct } = require('../controllers/productsController')
+
+routerProducts.route('/')
+  .get(authorization(['admin', 'manager', 'user']), getAllProducts)
+  .post(authorization(['admin']), createProduct)
+routerProducts.route('/:id')
+  .get(authorization(['admin', 'manager', 'user']), getProductById)
+  .put(authorization(['admin']), updateProduct)
+  .delete(authorization(['admin']), deleteProduct)
+routerProducts.route('/category/:category_id')
+  .get(authorization(['admin', 'manager', 'user']), getProductByCategoryId)
 
 module.exports = routerProducts

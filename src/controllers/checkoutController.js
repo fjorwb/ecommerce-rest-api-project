@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-const { pool } = require('../dbConfig')
 const { db } = require('../dbConfig')
 
 const Convert = require('../helpers/tableCodes')
@@ -52,13 +51,10 @@ const Checkout = async (request, response) => {
 
       const values = [order_id, cart_id, user_id, product_id, quantity, dataprod.price, dataprod.discount, tax, date]
 
-      pool.query(statement, values, (error, results) => {
-        if (error) {
-          throw error
-        }
-      })
+      await db.any(statement, values)
+
+      response.status(201).send('order was created')
     }
-    response.status(201).send('order was created')
   }
 
   return null
