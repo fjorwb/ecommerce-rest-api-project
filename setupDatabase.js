@@ -12,7 +12,8 @@ const database = async () => {
             user_id                 VARCHAR(6)      NOT NULL,
             name                    VARCHAR(50)     NOT NULL,
             email                   VARCHAR(50)     NOT NULL,
-            password                VARCHAR(100)    NOT NULL
+            password                VARCHAR(100)    NOT NULL,
+            role                    VARCHAR(10)    NOT NULL
         )
     `
 
