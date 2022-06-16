@@ -162,15 +162,25 @@ const updateOrder = async (request, response) => {
   }
 }
 
-const deleteOrder = (request, response) => {
-  const id = request.params.id
+const deleteOrder = async (request, response) => {
+  const order_id = request.params.order_id
+  console.log(order_id);
 
-  pool.query('DELETE FROM orders WHERE order_id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).send(`Order deleted with id: ${id}`)
-  })
+  const statement = 'SELECT * FROM orders WHERE order_id = $1'
+  const values = [order_id]
+
+  const results = await db.any(statement, values)
+
+  if (results?.length === 0) {
+    response.status(404).send(`not order found with order_id: ${order_id}`)
+  } else {
+    pool.query('DELETE FROM orders WHERE order_id = $1', [order_id], (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).send(`Order deleted with id: ${order_id}`)
+    })
+  }
 }
 
 module.exports = {

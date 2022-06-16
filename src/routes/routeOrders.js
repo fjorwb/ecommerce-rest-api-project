@@ -12,8 +12,8 @@ routerOrders.route('/')
   .put(authorization(['admin', 'manager']), updateOrder)
 routerOrders.route('/:id')
   .get(authorization(['admin', 'manager']), getOrderById)
-  .delete(authorization(['admin', 'manager']), deleteOrder)
 routerOrders.route('/order/:order_id')
   .get(authorization(['admin', 'manager']), getOrdersByOrderId)
+  .delete(authorization(['admin', 'manager']), deleteOrder)
 
 module.exports = routerOrders
