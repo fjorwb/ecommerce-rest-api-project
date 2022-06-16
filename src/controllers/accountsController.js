@@ -6,7 +6,7 @@ const AccountNumber = require('../helpers/accountCode')
 const date = Date.now()
 
 const getAccounts = async (request, response) => {
-  const statement = 'SELECT id, account_id, user_id FROM accounts ORDER BY id ASC'
+  const statement = 'SELECT * FROM accounts ORDER BY id ASC'
 
   const results = await db.any(statement)
 

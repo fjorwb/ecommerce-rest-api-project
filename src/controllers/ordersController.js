@@ -47,7 +47,7 @@ const createOrder = async (request, response) => {
   let statement = ('SELECT * FROM cart WHERE cart_id = $1')
   let values = [cart_id]
 
-  const acco_type = '1'
+  const accotype = '1'
 
   const temp = await db.any(statement, values)
 
@@ -104,12 +104,12 @@ const createOrder = async (request, response) => {
       amount = amount + (temp1[i].quantity * temp1[i].price * (1 - temp1[i].discount) * (1 + tax))
     }
 
-    const account_id = AccountNumber(acco_type, temp1[0].user_id)
+    const account_id = AccountNumber(accotype, temp1[0].user_id)
 
     pool.query(`INSERT INTO accounts
-      (account_id, user_id, order_id, amount, date, tax, acco_type)
+      (account_id, user_id, order_id, amount, date, tax, accotype)
       VALUES($1, $2, $3, $4, $5, $6, $7)`,
-    [account_id, temp1[0].user_id, order_id, amount, date, tax, acco_type],
+    [account_id, temp1[0].user_id, order_id, amount, date, tax, accotype],
     (error, results) => {
       if (error) {
         throw error
