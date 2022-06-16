@@ -9,20 +9,27 @@
     <title>Home</title>
   </head>
   <body>
-        <H1>e-Commerce API</H1>
-        <h3>fjorwb</h3>
-        <h1>Home</h1>
+    <header class="container">
+      <div class="header">
+            <H1>e-Commerce API</H1>
+            <h3>fjorwb</h3>
+            <div class="logout">
+                <h1>Home</h1>
+                <form action="/auth/login" method="POST">
+                  <button type="submit" class="btn">Login</button>
+                </form>
+            </div>
         <hr>
         <p>This RESTful API is part of Project Portfolio of FSE Caodecademy path career.
         </p>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi numquam libero facere odio est eligendi, provident ipsa, blanditiis adipisci officia accusamus veritatis sint temporibus molestias minima reprehenderit excepturi, a beatae.
         </p>
         <br>
+      </div>
+    </header>
 
     <% if (typeof message !== 'undefined' ) { %>
     <p><%= message %></p>
     <% } %>
-
-    <a href="/auth/login">Login</a>
   </body>
 </html>

@@ -19,18 +19,12 @@ const authorization = (permissions) => {
     const result = await db.any(statement, values)
     console.log(result)
 
-    const role = (Object.values(result)[0].role).trim() // this is a string
+    const role = (Object.values(result)[0].role)
     console.log(role)
 
-    const perm = Object.values(permissions) // this is an object
-    console.log(perm)
+    const permission = Object.values(permissions)
 
-    const permission = ConvertObject(perm)
-
-    console.log(permission)
-    console.log(typeof (permission))
-
-    if (perm.includes(role)) {
+    if (permission.includes(role)) {
       next()
     } else {
       res.status(401).json('not allowed')

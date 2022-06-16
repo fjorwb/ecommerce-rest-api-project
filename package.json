@@ -2,11 +2,11 @@
   "name": "ecommerce-rest-api-project",
   "version": "1.0.0",
   "description": "project on rest api using node, express and postgres SQL",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js",
+    "dev": "nodemon index.js",
     "create-db": "node -r dotenv/config setupDatabase",
     "eslint": "eslint ."
   },

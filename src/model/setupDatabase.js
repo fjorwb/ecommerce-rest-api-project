@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { DB } = require('./config')
+const { DB } = require('../../config')
 
 const { Client } = require('pg')
 
