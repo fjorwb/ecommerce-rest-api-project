@@ -49,6 +49,8 @@ app.use('/css', express.static(path.join(__dirname, '/public/css')))
 app.use('/image', express.static(path.join(__dirname, '/public/image')))
 app.use(favicon(path.join(__dirname, '/public/image', 'favicon.ico')))
 
+app.set('trust proxy', 1)
+
 app.use(rateLimiter({
   windowMs: 15 * 60 * 1000,
   max: 100
@@ -60,7 +62,6 @@ app.use(helmet())
 app.use(cors())
 app.use(xss())
 
-app.set('trust proxy', 1)
 
 app.use(flash())
 app.use(session({
