@@ -49,8 +49,10 @@ const createAccount = async (request, response) => {
   if (temp?.length === 0) {
     response.status(404).send('not account created. create user first')
   } else {
-    const type = AccountNumber(accotype)
-    const account_id = user_id + '-' + type
+    const type = AccountNumber(accotype, user_id)
+    console.log(type)
+    const account_id = type
+    console.log(account_id)
 
     const statement = `INSERT INTO accounts (account_id, user_id, accotype, amount, tax, date)
                        VALUES($1, $2, $3, $4, $5, $6)`

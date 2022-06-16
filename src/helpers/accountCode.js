@@ -10,7 +10,14 @@ function AccountNumber (num, user_id) {
 
   console.log(year, month, day)
 
-  const account_number = year.toString() + month.toString() + day.toString() + '-' + user_id + '-' + acctype
+  const account_number = year.toString() +
+                         month.toString() +
+                         day.toString() +
+                         '-' +
+                         user_id +
+                         '-' +
+                         acctype
+
   console.log(account_number)
 
   return account_number
