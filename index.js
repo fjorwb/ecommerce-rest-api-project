@@ -60,6 +60,8 @@ app.use(helmet())
 app.use(cors())
 app.use(xss())
 
+app.set('trust proxy', 1)
+
 app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
