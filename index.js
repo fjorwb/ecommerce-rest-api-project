@@ -9,14 +9,11 @@ const rateLimiter = require('express-rate-limit')
 
 const express = require('express')
 
-// const { db } = require('./src/dbConfig')
-// const { pool } = require('./src/dbConfig')
-
 const { checkAuthenticated } = require('./src/middlewares/authentication') // checkNotAuthenticated?
 
 const passport = require('passport')
 const session = require('express-session')
-// const store = new session.MemoryStore()
+const MemoryStore = require('memorystore')(session)
 const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -62,7 +59,6 @@ app.use(helmet())
 app.use(cors())
 app.use(xss())
 
-
 app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -70,6 +66,9 @@ app.use(session({
     secure: false,
     maxAge: 24 * 60 * 60 * 1000
   },
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }),
   resave: false,
   saveUninitialized: false,
   secure: true,
