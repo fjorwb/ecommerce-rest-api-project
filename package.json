@@ -35,6 +35,8 @@
     "pg": "8.7.3",
     "pg-promise": "10.11.1",
     "serve-favicon": "2.5.0",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.4.0",
     "xss-clean": "0.1.1"
   },
   "devDependencies": {

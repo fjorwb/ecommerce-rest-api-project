@@ -1,11 +1,12 @@
 require('dotenv').config()
-require('express-async-errors')
+// require('express-async-errors')
 
 // extra security packages
 const helmet = require('helmet')
-const cors = require('cors')
+// const cors = require('cors')
 const xss = require('xss-clean')
 const rateLimiter = require('express-rate-limit')
+const corsMiddleware = require('./src/middlewares/corsMiddleware')
 
 const express = require('express')
 
@@ -22,6 +23,25 @@ const favicon = require('serve-favicon')
 
 const notFound = require('./src/middlewares/notFound')
 const errorHandler = require('./src/middlewares/errorHandler')
+
+// Swagger
+const swaggerUI = require('swagger-ui-express')
+const swaggerJsDoc = require('swagger-jsdoc')
+const swaggerSpec = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'ecommerce API',
+      version: '1.0.0'
+    },
+    servers: [
+      {
+        url: 'http://localhost:5000'
+      }
+    ]
+  },
+  apis: [`${path.join(__dirname, './src/routes/*.js')}`]
+}
 
 const app = express()
 
@@ -56,7 +76,8 @@ app.use(morgan('tiny'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(helmet())
-app.use(cors())
+app.use('*', corsMiddleware)
+// app.use(corsMiddleware)
 app.use(xss())
 
 app.use(flash())
@@ -86,6 +107,8 @@ app.use('/categories', checkAuthenticated, routerCategories)
 app.use('/cart', checkAuthenticated, routerCart)
 app.use('/orders', checkAuthenticated, routerOrders)
 app.use('/checkout', checkAuthenticated, routerCheckout)
+
+app.use('/docs', swaggerUI.serve, (swaggerUI.setup(swaggerJsDoc(swaggerSpec))))
 
 app.get('/', (req, res) => {
   res.render('index.ejs')
