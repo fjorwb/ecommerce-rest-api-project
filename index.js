@@ -112,9 +112,9 @@ app.use('/docs', swaggerUI.serve, (swaggerUI.setup(swaggerJsDoc(swaggerSpec))))
 
 app.get('/', (req, res) => {
   res.status(200)
-  res.json({ msg: 'mensaje' })
-  res.send('helo!!!!!!!!!!!!!')
-  res.render('index.ejs')
+    .res.json({ msg: 'mensajeXXX' })
+    .res.send('helo!!!!!!!!!!!!!')
+    .res.render('index.ejs')
 })
 
 app.use(notFound)
