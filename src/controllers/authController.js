@@ -80,7 +80,7 @@ const registerUser = async (request, response) => {
     await db.any(statement, values)
 
     request.flash('success_msg', 'You are now registered. Please log in')
-    response.redirect('/auth/login')
+    response.send('user successfully registered')
   }
 }
 

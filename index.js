@@ -77,7 +77,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(helmet())
 app.use('*', corsMiddleware)
-// app.use(corsMiddleware)
+app.use(corsMiddleware)
 app.use(xss())
 
 app.use(flash())
@@ -111,6 +111,9 @@ app.use('/checkout', checkAuthenticated, routerCheckout)
 app.use('/docs', swaggerUI.serve, (swaggerUI.setup(swaggerJsDoc(swaggerSpec))))
 
 app.get('/', (req, res) => {
+  res.status(200)
+  res.json({ msg: 'mensaje' })
+  res.send('helo!!!!!!!!!!!!!')
   res.render('index.ejs')
 })
 
