@@ -24,25 +24,6 @@ const path = require('path')
 const notFound = require('./src/middlewares/notFound')
 const errorHandler = require('./src/middlewares/errorHandler')
 
-// Swagger
-// const swaggerUI = require('swagger-ui-express')
-// const swaggerJsDoc = require('swagger-jsdoc')
-// const swaggerSpec = {
-//   definition: {
-//     openapi: '3.0.0',
-//     info: {
-//       title: 'ecommerce API',
-//       version: '1.0.0'
-//     },
-//     servers: [
-//       {
-//         url: 'http://localhost:5000'
-//       }
-//     ]
-//   },
-//   apis: [`${path.join(__dirname, './src/routes/*.js')}`]
-// }
-
 const app = express()
 
 const initializePassport = require('./passportConfig')
@@ -59,6 +40,7 @@ const routerCategories = require('./src/routes/routeCategories')
 const routerCart = require('./src/routes/routeCart')
 const routerOrders = require('./src/routes/routeOrders')
 const routerCheckout = require('./src/routes/routeCheckout')
+const routerDocs = require('./src/routes/routeDocs')
 
 // middlewares
 app.use(express.static('/public'))
@@ -108,8 +90,7 @@ app.use('/categories', checkAuthenticated, routerCategories)
 app.use('/cart', checkAuthenticated, routerCart)
 app.use('/orders', checkAuthenticated, routerOrders)
 app.use('/checkout', checkAuthenticated, routerCheckout)
-
-// app.use('/docs', swaggerUI.serve, (swaggerUI.setup(swaggerJsDoc(swaggerSpec))))
+app.use('/docs', routerDocs)
 
 app.get('/', (req, res) => {
   res.render('index.ejs')
