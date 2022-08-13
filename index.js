@@ -19,7 +19,7 @@ const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const path = require('path')
-const favicon = require('serve-favicon')
+// const favicon = require('serve-favicon')
 
 const notFound = require('./src/middlewares/notFound')
 const errorHandler = require('./src/middlewares/errorHandler')
@@ -64,7 +64,7 @@ const routerCheckout = require('./src/routes/routeCheckout')
 app.use(express.static('/public'))
 app.use('/css', express.static(path.join(__dirname, '/public/css')))
 app.use('/image', express.static(path.join(__dirname, '/public/image')))
-app.use(favicon(path.join(__dirname, '/public/image', 'favicon.ico')))
+// app.use(favicon(path.join(__dirname, '/public/image', 'favicon.ico')))
 
 app.set('trust proxy', 1)
 
