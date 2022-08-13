@@ -8,5 +8,5 @@ module.exports = {
     PGPORT: process.env.PGPORT
   },
   SESSION_SECRET: process.env.SESSION_SECRET,
-  NODE_ENV: 'development'
+  NODE_ENV: process.env.NODE_ENV
 }
