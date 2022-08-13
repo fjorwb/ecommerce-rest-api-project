@@ -10,8 +10,6 @@ const xss = require('xss-clean')
 const rateLimiter = require('express-rate-limit')
 // const corsMiddleware = require('./src/middlewares/corsMiddleware')
 
-const { checkAuthenticated } = require('./src/middlewares/authentication') // checkNotAuthenticated?
-
 const passport = require('passport')
 const session = require('express-session')
 const MemoryStore = require('memorystore')(session)
@@ -19,7 +17,7 @@ const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const path = require('path')
-// const favicon = require('serve-favicon')
+const favicon = require('serve-favicon')
 
 const notFound = require('./src/middlewares/notFound')
 const errorHandler = require('./src/middlewares/errorHandler')
@@ -28,6 +26,9 @@ const app = express()
 
 const initializePassport = require('./passportConfig')
 initializePassport(passport)
+
+const { checkAuthenticated } = require('./src/middlewares/authentication') // checkNotAuthenticated?
+const { checkNotAuthenticated } = require('./src/middlewares/authentication') // checkNotAuthenticated?
 
 app.set('view engine', 'ejs')
 
@@ -46,7 +47,7 @@ const routerDocs = require('./src/routes/routeDocs')
 app.use(express.static('/public'))
 app.use('/css', express.static(path.join(__dirname, '/public/css')))
 app.use('/image', express.static(path.join(__dirname, '/public/image')))
-// app.use(favicon(path.join(__dirname, '/public/image', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, '/public/image', 'favicon.ico')))
 
 app.set('trust proxy', 1)
 
@@ -101,17 +102,17 @@ app.use(errorHandler)
 
 const port = process.env.PORT || 5000
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
-}
-)
-
-// const start = async () => {
-//   try {
-//     app.listen(port, console.log(`Listening on port ${port}`))
-//   } catch (error) {
-//     console.log(error)
-//   }
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`)
 // }
+// )
 
-// start()
+const start = async () => {
+  try {
+    app.listen(port, console.log(`Listening on port ${port}`))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+start()
