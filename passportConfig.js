@@ -11,6 +11,7 @@ function initialize (passport) {
         if (error) {
           throw error
         }
+        console.log(results.rows[0])
 
         if (results.rows.length > 0) {
           const user = results.rows[0]

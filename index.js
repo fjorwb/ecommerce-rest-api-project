@@ -1,14 +1,14 @@
 require('dotenv').config()
 require('express-async-errors')
 
+const express = require('express')
+
 // extra security packages
 const helmet = require('helmet')
 const cors = require('cors')
 const xss = require('xss-clean')
 const rateLimiter = require('express-rate-limit')
 // const corsMiddleware = require('./src/middlewares/corsMiddleware')
-
-const express = require('express')
 
 const { checkAuthenticated } = require('./src/middlewares/authentication') // checkNotAuthenticated?
 
@@ -112,7 +112,7 @@ app.use('/checkout', checkAuthenticated, routerCheckout)
 // app.use('/docs', swaggerUI.serve, (swaggerUI.setup(swaggerJsDoc(swaggerSpec))))
 
 app.get('/', (req, res) => {
-  res.render('index')
+  res.render('index.ejs')
 })
 
 app.use(notFound)
