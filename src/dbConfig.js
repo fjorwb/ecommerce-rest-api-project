@@ -14,9 +14,9 @@ const pool = new Pool({
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
-  port: process.env.PGPORT
-  // max: 20,
-  // ssl
+  port: process.env.PGPORT,
+  max: 20,
+  ssl
 })
 
 const connection = ({
