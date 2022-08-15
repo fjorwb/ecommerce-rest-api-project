@@ -7,7 +7,7 @@ const authorization = require('../middlewares/authorization')
 const { getAllUsers, getUserById, getUserByUserName, updateUser, deleteUser } = require('../controllers/usersController')
 
 routerUsers.route('/')
-  .get(authorization(['admin']), getAllUsers)
+  .get(authorization(['admin'], ['user']), getAllUsers)
 routerUsers.route('/:id')
   .get(authorization(['admin']), getUserById)
   .put(authorization(['admin']), updateUser)

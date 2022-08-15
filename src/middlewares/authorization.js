@@ -18,14 +18,14 @@ const authorization = (permissions) => {
       const role = result[0].role
       console.log('role::::: ' + role)
 
-      // const permission = Object.values(permissions)
-      // console.log('permission: ' + permission)
+      const permission = Object.values(permissions)
+      console.log('permission: ' + permission)
 
-      console.log('persmissions::::: ' + permissions)
+      console.log('persmissions::::: ' + permissions[0])
       console.log(typeof (permissions))
       console.log('permissions includes role:::::::' + permissions.includes(role))
 
-      if (permissions[0].includes(role)) {
+      if (permission[0].includes(role)) {
         console.log('allowed')
         next()
       } else {
