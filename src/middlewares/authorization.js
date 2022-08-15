@@ -1,6 +1,6 @@
 const { db } = require('../dbConfig')
 
-const ConvertObject = require('../helpers/ConvertObject')
+// const ConvertObject = require('../helpers/ConvertObject')
 // const ShowUser = require('../helpers/ShowUser')
 
 const authorization = (permissions) => {
@@ -14,12 +14,16 @@ const authorization = (permissions) => {
     const values = [user]
 
     const result = await db.any(statement, values)
+    console.log(result)
 
     const role = (Object.values(result)[0].role)
+    console.log(role)
 
     const permission = Object.values(permissions)
+    console.log(permission)
 
     if (permission.includes(role)) {
+      console.log('allowed')
       next()
     } else {
       res.status(401).json('not allowed')
