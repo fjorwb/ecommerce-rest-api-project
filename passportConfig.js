@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy
 
-const { db } = require('./src/dbConfig')
+const { pool, db } = require('./src/dbConfig')
 
 const bcrypt = require('bcrypt')
 
@@ -97,23 +97,12 @@ function initialize (passport) {
   })
 
   passport.deserializeUser((id, done) => {
-    try {
-      const statement = 'SELECT * FROM users WHERE id = $1'
-      const values = [id]
-
-      const results = db.query(statement, values)
-      console.log(results)
-      done(null, results[0])
-    } catch (error) {
-      return done(error)
-    }
-
-    // pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
-    //   if (error) {
-    //     return done(error)
-    //   }
-    //   return done(null, results.rows[0])
-    // })
+    pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+      if (error) {
+        return done(error)
+      }
+      return done(null, results.rows[0])
+    })
   })
 }
 
