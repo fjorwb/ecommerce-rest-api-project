@@ -23,6 +23,8 @@ const authorization = (permissions) => {
     console.log('permission: ' + permission)
 
     if (permissions.includes(role)) {
+      console.log(permissions)
+      console.log(permissions.includes(role))
       console.log('allowed')
       next()
     } else {
