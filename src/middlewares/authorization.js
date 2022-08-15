@@ -16,7 +16,7 @@ const authorization = (permissions) => {
     const result = await db.any(statement, values)
     console.log(result)
 
-    const role = (Object.values(result)[0].role)
+    const role = result[0].role
     console.log(role)
 
     const permission = Object.values(permissions)
