@@ -20,7 +20,7 @@ const authorization = (permissions) => {
     console.log(role)
 
     const permission = Object.values(permissions)
-    console.log(permission)
+    console.log('permission: ' + permission)
 
     if (permission.includes(role)) {
       console.log('allowed')
