@@ -13,16 +13,16 @@ const authorization = (permissions) => {
       const values = [user]
 
       const result = await db.any(statement, values)
-      console.log(result)
+      console.log('results:::::' + result)
 
       const role = result[0].role
-      console.log(role)
+      console.log('role::::: ' + role)
 
       // const permission = Object.values(permissions)
       // console.log('permission: ' + permission)
 
-      console.log(permissions)
-      console.log(permissions.includes(role))
+      console.log('persmissions::::: ' + permissions)
+      console.log('permissions includes role:::::::' +permissions.includes(role))
 
       if (permissions.includes(role)) {
         console.log('allowed')
