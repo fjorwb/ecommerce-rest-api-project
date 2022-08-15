@@ -2,16 +2,12 @@
 
 const authorization = (permissions) => {
   return (req, res, next) => {
-    if (req.user.role === 'admin') {
+    if (permissions.includes(req.user.role)) {
       next()
     } else {
-      if (permissions.includes(req.user.role)) {
-        next()
-      } else {
-        res.status(403).json({
-          message: 'Forbidden'
-        })
-      }
+      res.status(403).json({
+        message: 'Forbidden'
+      })
     }
   }
 }
