@@ -2,9 +2,10 @@
 
 function AccountNumber (num, user_id) {
   const date = new Date(Date.now())
+  console.log(date)
   const year = dateToString(date.getFullYear())
-  const month = dateToString(date.getMonth())
-  const day = dateToString(date.getDay())
+  const month = dateToString(date.getMonth() + 1)
+  const day = dateToString(date.getDate())
 
   const acctype = digit(num)
 
