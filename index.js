@@ -84,7 +84,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use('/auth', routerAuth)
-app.use('/users', checkAuthenticated, routerUsers)
+app.use('/users', routerUsers)
 app.use('/products', checkAuthenticated, routerProducts)
 app.use('/accounts', checkAuthenticated, routerAccounts)
 app.use('/categories', checkAuthenticated, routerCategories)
