@@ -22,9 +22,10 @@ const authorization = (permissions) => {
       // console.log('permission: ' + permission)
 
       console.log('persmissions::::: ' + permissions)
-      console.log('permissions includes role:::::::' +permissions.includes(role))
+      console.log(typeof (permissions))
+      console.log('permissions includes role:::::::' + permissions.includes(role))
 
-      if (permissions.includes(role)) {
+      if (permissions[0].includes(role)) {
         console.log('allowed')
         next()
       } else {
