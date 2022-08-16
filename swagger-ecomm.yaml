@@ -206,26 +206,38 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /accounts/28:
+  /accounts/{id}:
     get:
       tags:
         - Accounts
       summary: getAccountById
       operationId: getAccountById
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the account id (not account_id)
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /accounts/30:
     put:
       tags:
         - Accounts
       summary: updateAccount
       operationId: updateAccount
-      parameters: []
-      requestBody:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the account id (not account_id)      requestBody:
         description: ''
         content:
           application/json:
@@ -244,7 +256,14 @@ paths:
         - Accounts
       summary: deleteAccount
       operationId: deleteAccount
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the account id (not account_id)
       responses:
         '200':
           description: ''
@@ -284,25 +303,38 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /categories/1:
+  /categories/{id}:
     get:
       tags:
         - Categories
       summary: getCategoryById
       operationId: getCategoryById
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the category id (not category_id)
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /categories/10:
     put:
       tags:
         - Categories
       summary: updateCategory
       operationId: updateCategory
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the category id (not category_id)
       requestBody:
         description: ''
         content:
@@ -324,7 +356,14 @@ paths:
         - Categories
       summary: deleteCategory
       operationId: deleteCategory
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the category id (not category_id)
       responses:
         '200':
           description: ''
@@ -368,25 +407,38 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /products/5:
+  /products/{id}:
     get:
       tags:
         - Products
       summary: getProductById
       operationId: getProductById
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the product id (not product_id)
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /products/30:
     put:
       tags:
         - Products
       summary: updateProduct
       operationId: updateProduct
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the product id (not product_id)
       requestBody:
         description: ''
         content:
@@ -412,19 +464,32 @@ paths:
         - Products
       summary: deleteProduct
       operationId: deleteProduct
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the product id (not product_id)
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /products/category/1000:
+  /products/category/{category_id}:
     get:
       tags:
         - Products
       summary: getProductsByCategoryId
       operationId: getProductsByCategoryId
-      parameters: []
+      parameters:
+        - in: path
+          name: category_id
+          required: true
+          schema:
+            type: string
+          description: the category_id
       responses:
         '200':
           description: ''
@@ -487,25 +552,38 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /cart/3:
+  /cart/{id}:
     get:
       tags:
         - Cart
       summary: getCartById
       operationId: getCartById
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the cart id (not cart_id)
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /cart/cart/000005:
+  /cart/cart/{cart_id}:
     get:
       tags:
         - Cart
       summary: getCartByCartId
       operationId: getCartByCartId
-      parameters: []
+      parameters:
+        - in: path
+          name: cart_id
+          required: true
+          schema:
+            type: string
+          description: the cart_id
       responses:
         '200':
           description: ''
@@ -516,19 +594,32 @@ paths:
         - Cart
       summary: deleteAllCart
       operationId: deleteAllCart
-      parameters: []
+      parameters:
+        - in: path
+          name: cart_id
+          required: true
+          schema:
+            type: string
+          description: the cart_id
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /cart/22:
+  /cart/{id}:
     delete:
       tags:
         - Cart
       summary: deleteCartItem
       operationId: deleteCartItem
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the cart item id (not cart_id)
       responses:
         '200':
           description: ''
@@ -592,37 +683,55 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /orders/44:
+  /orders/{id}:
     get:
       tags:
         - Orders
       summary: getOrderById
       operationId: getOrderById
-      parameters: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the order id (not order_id)
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /orders/order/000002:
+  /orders/order/{order_id}:
     get:
       tags:
         - Orders
       summary: getOrderByOrderId
       operationId: getOrderByOrderId
-      parameters: []
+      parameters:
+        - in: path
+          name: order_id
+          required: true
+          schema:
+            type: string
+          description: the order_id
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /orders/order/000004:
     delete:
       tags:
         - Orders
       summary: deleteOrder
       operationId: deleteOrder
-      parameters: []
+      parameters:
+        - in: path
+          name: order_id
+          required: true
+          schema:
+            type: string
+          description: the order_id
       responses:
         '200':
           description: ''
