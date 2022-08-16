@@ -237,7 +237,8 @@ paths:
           schema:
             type: integer
             minimum: 1
-          description: the account id (not account_id)      requestBody:
+          description: the account id (not account_id)      
+      requestBody:
         description: ''
         content:
           application/json:
