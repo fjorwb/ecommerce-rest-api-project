@@ -2,7 +2,7 @@
 const { db } = require('../dbConfig')
 
 const getCategories = async (request, response) => {
-  const results = await db.any('SELECT * FROM categories')
+  const results = await db.any('SELECT * FROM categories ORDER BY category_id ASC')
 
   response.status(200).json(results)
 }
