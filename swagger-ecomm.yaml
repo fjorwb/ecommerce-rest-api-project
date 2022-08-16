@@ -87,25 +87,38 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /users/1:
+  /users/{id}:
     get:
       tags:
         - users
       summary: getUserById
       operationId: getUserById
-      parameters: []
+      parameters:
+        in: path
+        name: id
+        requires: true
+        schema:
+          type: integer
+          minimum: 1
+        description: the user id (not user_id)
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /users/10:
     put:
       tags:
         - users
       summary: updateUser
       operationId: updateUser
-      parameters: []
+      parameters:
+        in: path
+        name: id
+        requires: true
+        schema:
+          type: integer
+          minimum: 1
+        description: the user id (not user_id)
       requestBody:
         description: ''
         content:
@@ -127,19 +140,32 @@ paths:
         - users
       summary: deleteUser
       operationId: deleteUser
-      parameters: []
+      parameters:
+        in: path
+        name: id
+        requires: true
+        schema:
+          type: integer
+          minimum: 1
+        description: the user id (not user_id)
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /users/user/pe:
+  /users/user/{name}:
     get:
       tags:
         - users
       summary: getUserByName
       operationId: getUserByName
-      parameters: []
+      parameters:
+        in: path
+        name: name
+        requires: true
+        schema:
+          type: string
+        description: the user name
       responses:
         '200':
           description: ''
