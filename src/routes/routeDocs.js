@@ -17,7 +17,7 @@ const swaggerOptions = {
       }
     }
   },
-  apis: ['../../swagger-ecomm.yaml']
+  apis: ['swagger-ecomm.yaml']
 }
 
 const specs = swagger(swaggerOptions)
