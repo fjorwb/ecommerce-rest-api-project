@@ -73,9 +73,9 @@ const registerUser = async (request, response) => {
   } else {
     const name = `${firstname} ${lastname}`
 
-    const statement = `INSERT INTO users (user_id, name, email, password)
-              VALUES ($1, $2, $3, $4)`
-    const values = [user_id, name, email, hashedPassword]
+    const statement = `INSERT INTO users (user_id, name, email, password, role)
+              VALUES ($1, $2, $3, $4, $5)`
+    const values = [user_id, name, email, hashedPassword, 'user']
 
     await db.any(statement, values)
 

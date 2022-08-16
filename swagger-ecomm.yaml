@@ -115,6 +115,7 @@ paths:
             example:
               name: mary pops
               email: mary@post.ca
+              role: user
         required: true
       responses:
         '200':

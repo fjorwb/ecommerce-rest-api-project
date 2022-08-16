@@ -31,14 +31,14 @@ const getUserById = async (request, response) => {
 // update user
 const updateUser = async (request, response) => {
   const id = parseInt(request.params.id)
-  const { name, email } = request.body
+  const { name, email, role } = request.body
 
   if (!name || !email) {
     return response.status(400).send('request.body is missing/incomplete. Check request.body')
   }
 
-  const statement = 'UPDATE users SET name = $1, email = $2 WHERE id = $3'
-  const values = [name, email, id]
+  const statement = 'UPDATE users SET name = $1, email = $2, role = $3  WHERE id = $4'
+  const values = [name, email, role, id]
 
   await db.any(statement, values)
 
