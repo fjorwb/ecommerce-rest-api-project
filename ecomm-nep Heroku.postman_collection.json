@@ -1,0 +1,963 @@
+{
+	"info": {
+		"_postman_id": "e46e7a76-75f1-4e32-abaf-29b668773a13",
+		"name": "ecomm-nep Heroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18468273"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "registerUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"mary\",\r\n    \"lastname\": \"poppins\",\r\n    \"email\": \"mary@post.eu\",\r\n    \"password\": \"secret\",\r\n    \"password2\": \"secret\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/auth/register",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginUser",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john@mail.com\",\r\n    \"password\": \"secret\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/auth/login",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logoutUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/auth/logout",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "getAllUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/users",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/users/1",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"mary pops\",\r\n    \"email\": \"mary@post.ca\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/users/10",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"users",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"tutti\",\r\n    \"email\": \"tutti@post.com\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/users/10",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"users",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/users/user/pe",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"users",
+								"user",
+								"pe"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "getAllAccounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/accounts",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAccountById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/accounts/28",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"accounts",
+								"28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createAccount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"000001\",\r\n    \"accotype\": 2,\r\n    \"amount\": 130,\r\n    \"tax\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/accounts",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAccount",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/accounts/30",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"accounts",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAccount",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/accounts/30",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"accounts",
+								"30"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "getAllCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/categories",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategoryById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/categories/1",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createCategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_id\": \"1004\",\r\n    \"category_name\": \"frozen foods\",\r\n    \"category_description\": \"frozen foods\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/categories",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCategory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_id\": \"1004\",\r\n    \"category_name\": \"frozen food\",\r\n    \"category_description\": \"frozen food\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/categories/10",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"categories",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_id\": \"1100\",\r\n    \"category_name\": \"beverages\",\r\n    \"category_description\": \"beverages\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/categories/10",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"categories",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "getAllProducts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/products",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProductById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/products/5",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"products",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createProduct",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\" : \"1002-1040\",\r\n    \"name\": \"Mango\",\r\n    \"description\": \"Mango\",\r\n    \"price\": 70.35,\r\n    \"unit\": \"kg\",\r\n    \"discount\": 0,\r\n    \"img\": \"https://i.ibb.co/BPCthCS/mango.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/products",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateProduct",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": \"1002-1040\",\r\n    \"name\": \"Radish\",\r\n    \"description\": \"Radish\",\r\n    \"unit\": \"kg\",\r\n    \"price\": 215.86,\r\n    \"discount\": 0.5,\r\n    \"img\": \"https://i.ibb.co/k0GRcrS/radish.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/products/30",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"products",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteProduct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/products/30",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"products",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProductsByCategoryId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/products/category/1000",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"products",
+								"category",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "getAllCarts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/cart",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCartById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/cart/3",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"cart",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCartByCartId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/cart/cart/000005",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"cart",
+								"cart",
+								"000005"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createCart",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"samecart\": true,\r\n    \"user_id\": \"000002\",\r\n    \"product_id\": \"1002-1002\",\r\n    \"quantity\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/cart",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCart",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cart_id\": \"000005\",\r\n    \"product_id\": \"1002-1002\",\r\n    \"quantity\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/cart",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCartItem",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/cart/22",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"cart",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllCart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/cart/cart/000005",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"cart",
+								"cart",
+								"000005"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "getAllOrders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/orders",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOrderById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/orders/44",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"orders",
+								"44"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOrderByOrderId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hrkecomm}}/orders/order/000002",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"orders",
+								"order",
+								"000002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createOrder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cart_id\": \"000004\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/orders",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteOrder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/orders/order/000004",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"orders",
+								"order",
+								"000004"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOrder",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_id\": \"000003\",\r\n    \"product_id\": \"1001-1014\",\r\n    \"quantity\": 90,\r\n    \"price\": 5.10,\r\n    \"discount\": 0.1,\r\n    \"tax\": 0.06,\r\n    \"date\": 1652473014\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/orders",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout",
+			"item": [
+				{
+					"name": "checkout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cart_id\": \"000004\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hrkecomm}}/checkout",
+							"host": [
+								"{{hrkecomm}}"
+							],
+							"path": [
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hrkecomm",
+			"value": "https://ecommerce-fjor.herokuapp.com",
+			"type": "string"
+		}
+	]
+}
