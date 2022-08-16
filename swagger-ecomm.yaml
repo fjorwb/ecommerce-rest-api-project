@@ -94,13 +94,13 @@ paths:
       summary: getUserById
       operationId: getUserById
       parameters:
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-          minimum: 1
-        description: the user id (not user_id)
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the user id (not user_id)
       responses:
         '200':
           description: ''
@@ -112,13 +112,13 @@ paths:
       summary: updateUser
       operationId: updateUser
       parameters:
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-          minimum: 1
-        description: the user id (not user_id)
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the user id (not user_id)
       requestBody:
         description: ''
         content:
@@ -141,13 +141,13 @@ paths:
       summary: deleteUser
       operationId: deleteUser
       parameters:
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-          minimum: 1
-        description: the user id (not user_id)
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the user id (not user_id)
       responses:
         '200':
           description: ''
@@ -160,12 +160,12 @@ paths:
       summary: getUserByName
       operationId: getUserByName
       parameters:
-        in: path
-        name: name
-        required: true
-        schema:
-          type: string
-        description: the user name
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          description: the user name
       responses:
         '200':
           description: ''
