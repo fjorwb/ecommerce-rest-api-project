@@ -693,6 +693,8 @@ components:
           type: string
         email:
           type: string
+        role:
+          type: string
       example:
         name: mary pops
         email: mary@post.ca
