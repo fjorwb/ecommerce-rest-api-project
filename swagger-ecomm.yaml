@@ -737,13 +737,19 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /checkout:
+  /checkout/:{cart_id}:
     get:
       tags:
         - Checkout
       summary: checkout
       operationId: checkout
-      parameters: []
+      parameters:
+        - in: path
+          name: cart_id
+          required: true
+          schema:
+            type: string
+          description: the cart_id
       responses:
         '200':
           description: ''
