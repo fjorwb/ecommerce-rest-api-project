@@ -36,37 +36,11 @@ const Checkout = async (request, response) => {
 
     order_id = Convert(order_num)
 
-    // for (let i = 0; i < cart.length; i++) {
-    //   const { product_id, user_id, quantity } = cart[i]
-    //   const dataprod = await db.any('SELECT price, discount FROM products WHERE product_id = $1', [product_id])
-
-    //   const statement = (`INSERT INTO orders (
-    //                 order_id,
-    //                 cart_id,
-    //                 user_id,
-    //                 product_id,
-    //                 quantity,
-    //                 price,
-    //                 discount,
-    //                 tax,
-    //                 date)
-    //                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`)
-
-    //   const values = [order_id, cart_id, user_id, product_id, quantity, dataprod.price, dataprod.discount, tax, date]
-
-    //   await db.any(statement, values)
-    // }
-
     // SELECT CART ITEMS TO CREATE ORDER
     console.log(cart_id)
     const statement1 = ('SELECT * FROM cart WHERE cart_id = $1')
     const values1 = [cart_id]
     const temp1 = await db.any(statement1, values1)
-
-    // console.log('..............................................')
-    // console.log(temp1)
-    // console.log(order_id)
-    // console.log('..............................................')
 
     //  CREATE ORDER
     for (let i = 0; i < temp1.length; i++) {

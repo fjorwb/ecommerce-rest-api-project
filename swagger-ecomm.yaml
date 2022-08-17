@@ -737,7 +737,7 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /checkout/:{cart_id}:
+  /checkout/{cart_id}:
     get:
       tags:
         - Checkout
