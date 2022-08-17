@@ -8,10 +8,11 @@ const { getAllCarts, getCartById, getCartByCartId, createCart, updateCart, delet
 
 routerCart.route('/')
   .get(authorization(['admin', 'manager']), getAllCarts)
-  .post(authorization(['admin', 'manager', 'user']), createCart).put(updateCart)
+  .post(authorization(['admin', 'manager', 'user']), createCart)
 routerCart.route('/:id')
   .get(authorization(['admin', 'manager', 'user']), getCartById)
   .delete(authorization(['admin', 'manager', 'user']), deleteCartItem)
+  .put(updateCart)
 routerCart.route('/cart/:cart_id')
   .get(authorization(['admin', 'manager', 'user']), getCartByCartId)
   .delete(authorization(['admin']), deleteAllCart)

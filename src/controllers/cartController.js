@@ -75,6 +75,10 @@ const createCart = async (request, response) => {
 
   const temp = await db.any(statement, values)
 
+  if (temp?.length === 0) {
+    response.status(404).send(`no product found with product_id:${product_id}`)
+  }
+
   price = temp[0].price
   discount = temp[0].discount
 
@@ -143,31 +147,57 @@ const createCart = async (request, response) => {
 }
 
 const updateCart = async (request, response) => {
+  const { id } = request.params
+
   const {
-    cart_id,
-    product_id,
     quantity
   } = request.body
 
   const date = Date.now()
 
-  const statement = ('SELECT * FROM cart WHERE cart_id = $1 AND product_id = $2')
-  const values = [cart_id, product_id]
+  let statement = 'SELECT * FROM cart WHERE id = $1'
+  let values = [id]
 
   const results = await db.any(statement, values)
 
   if (results?.length === 0) {
-    response.status(404).send(`there is not cart with id_cart: ${cart_id} and product_id: ${product_id}`)
+    response.status(404).send(`no cart found with id:${id}`)
   } else {
-    const statement = `UPDATE cart SET quantity = $1, date = $2 
-                WHERE cart_id = $3 AND product_id = $4`
-    const values = [quantity, date, cart_id, product_id]
+    statement = ('UPDATE cart SET quantity = $1, date = $2 WHERE id = $3')
+    values = [quantity, date, id]
 
     await db.any(statement, values)
 
-    response.status(200).send(`cart with cart_id: ${cart_id} updated`)
+    response.status(200).send(`cart with Id: ${id} updated`)
   }
 }
+
+// const updateCart = async (request, response) => {
+//   const {
+//     cart_id,
+//     product_id,
+//     quantity
+//   } = request.body
+
+//   const date = Date.now()
+
+//   const statement = ('SELECT * FROM cart WHERE cart_id = $1 AND product_id = $2')
+//   const values = [cart_id, product_id]
+
+//   const results = await db.any(statement, values)
+
+//   if (results?.length === 0) {
+//     response.status(404).send(`there is not cart with id_cart: ${cart_id} and product_id: ${product_id}`)
+//   } else {
+//     const statement = `UPDATE cart SET quantity = $1, date = $2
+//                 WHERE cart_id = $3 AND product_id = $4`
+//     const values = [quantity, date, cart_id, product_id]
+
+//     await db.any(statement, values)
+
+//     response.status(200).send(`cart with cart_id: ${cart_id} updated`)
+//   }
+// }
 
 const deleteCartItem = async (request, response) => {
   const id = request.params.id

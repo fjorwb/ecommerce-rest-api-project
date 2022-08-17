@@ -511,7 +511,7 @@ paths:
     post:
       tags:
         - Cart
-      summary: createCart
+      summary: createCart -- create a cart / add item to a cart
       operationId: createCart
       parameters: []
       requestBody:
@@ -531,10 +531,29 @@ paths:
           description: ''
           headers: {}
       deprecated: false
+  /cart/{id}:
+    get:
+      tags:
+        - Cart
+      summary: getCartById -- get item in a cart
+      operationId: getCartById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the cart id (not cart_id) 
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
     put:
       tags:
         - Cart
-      summary: updateCart
+      summary: updateCart -- update an item in a cart
       operationId: updateCart
       parameters: []
       requestBody:
@@ -548,25 +567,6 @@ paths:
               product_id: 1002-1002
               quantity: 10
         required: true
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-  /cart/{id}:
-    get:
-      tags:
-        - Cart
-      summary: getCartById
-      operationId: getCartById
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            minimum: 1
-          description: the cart id (not cart_id)
       responses:
         '200':
           description: ''
@@ -594,7 +594,7 @@ paths:
     get:
       tags:
         - Cart
-      summary: getCartByCartId
+      summary: getCartByCartId -- get all items in a cart
       operationId: getCartByCartId
       parameters:
         - in: path
@@ -637,26 +637,26 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-    post:
-      tags:
-        - Orders
-      summary: createOrder
-      operationId: createOrder
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/createOrderRequest'
-            example:
-              cart_id: '000004'
-        required: true
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
+    # post:
+    #   tags:
+    #     - Orders
+    #   summary: createOrder
+    #   operationId: createOrder
+    #   parameters: []
+    #   requestBody:
+    #     description: ''
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/createOrderRequest'
+    #         example:
+    #           cart_id: '000004'
+    #     required: true
+    #   responses:
+    #     '200':
+    #       description: ''
+    #       headers: {}
+    #   deprecated: false
     put:
       tags:
         - Orders
@@ -687,7 +687,7 @@ paths:
     get:
       tags:
         - Orders
-      summary: getOrderById
+      summary: getOrderById -- get item in an order
       operationId: getOrderById
       parameters:
         - in: path
@@ -706,7 +706,7 @@ paths:
     get:
       tags:
         - Orders
-      summary: getOrderByOrderId
+      summary: getOrderByOrderId -- get all items in an order
       operationId: getOrderByOrderId
       parameters:
         - in: path
