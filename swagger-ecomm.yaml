@@ -171,105 +171,7 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /accounts:
-    get:
-      tags:
-        - Accounts
-      summary: getAllAccounts
-      operationId: getAllAccounts
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-    post:
-      tags:
-        - Accounts
-      summary: createAccount
-      operationId: createAccount
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/createAccountRequest'
-            example:
-              user_id: '000001'
-              accotype: 2
-              amount: 130
-              tax: 0
-        required: true
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-  /accounts/{id}:
-    get:
-      tags:
-        - Accounts
-      summary: getAccountById
-      operationId: getAccountById
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            minimum: 1
-          description: the account id (not account_id)
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-    put:
-      tags:
-        - Accounts
-      summary: updateAccount
-      operationId: updateAccount
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            minimum: 1
-          description: the account id (not account_id)      
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/updateAccountRequest'
-            example:
-              amount: 50
-        required: true
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-    delete:
-      tags:
-        - Accounts
-      summary: deleteAccount
-      operationId: deleteAccount
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            minimum: 1
-          description: the account id (not account_id)
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
+
   /categories:
     get:
       tags:
@@ -737,6 +639,105 @@ paths:
           description: ''
           headers: {}
       deprecated: false
+  /accounts:
+    get:
+      tags:
+        - Accounts
+      summary: getAllAccounts
+      operationId: getAllAccounts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Accounts
+      summary: createAccount
+      operationId: createAccount
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createAccountRequest'
+            example:
+              user_id: '000001'
+              accotype: 2
+              amount: 130
+              tax: 0
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /accounts/{id}:
+    get:
+      tags:
+        - Accounts
+      summary: getAccountById
+      operationId: getAccountById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the account id (not account_id)
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    put:
+      tags:
+        - Accounts
+      summary: updateAccount
+      operationId: updateAccount
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the account id (not account_id)      
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateAccountRequest'
+            example:
+              amount: 50
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Accounts
+      summary: deleteAccount
+      operationId: deleteAccount
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: the account id (not account_id)
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
   /checkout/{cart_id}:
     get:
       tags:
@@ -1077,9 +1078,9 @@ components:
 tags:
   - name: Auth
   - name: users
-  - name: Accounts
   - name: Categories
   - name: Products
   - name: Cart
   - name: Orders
+  - name: Accounts
   - name: Checkout
