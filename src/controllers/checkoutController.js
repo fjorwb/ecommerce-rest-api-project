@@ -16,35 +16,41 @@ const Checkout = async (request, response) => {
   let order_id = ''
 
   if (!cart_id) {
-    response.status(400).send('please enter valid cart id')
-  }
-
-  // get cart
-  const cart = await db.any('SELECT * FROM cart WHERE cart_id = $1', [cart_id])
-
-  if (cart?.length === 0) {
-    response.status(404).send(`no cart with cart_id: ${cart_id}`)
+    response.status(400).send('please enter valid cart_id')
   } else {
-    // check orders for orders_id
-    const orders = await db.any('SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1')
+    // get cart
+    const cart = await db.any('SELECT * FROM cart WHERE cart_id = $1', [cart_id])
 
-    if (orders?.length === 0) {
-      order_num = 1
+    if (cart?.length === 0) {
+      response.status(404).send(`no cart with cart_id: ${cart_id}`)
     } else {
-      order_num = Number(orders.order_id) + 1
-    }
+    // check orders for orders_id
+      const orders = await db.any('SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1')
 
-    order_id = Convert(order_num)
+      console.log('orders.........' + orders)
 
-    // SELECT CART ITEMS TO CREATE ORDER
-    console.log(cart_id)
-    const statement1 = ('SELECT * FROM cart WHERE cart_id = $1')
-    const values1 = [cart_id]
-    const temp1 = await db.any(statement1, values1)
+      if (orders?.length === 0) {
+        console.log('1a - orders.order_id:::: ' + orders.order_id)
+        order_num = 1
+      } else {
+        console.log('1b - orders.order_id:::: ' + orders[0].order_id)
 
-    //  CREATE ORDER
-    for (let i = 0; i < temp1.length; i++) {
-      const statement2 = (`INSERT INTO orders (
+        order_num = Number(orders[0].order_id) + 1
+        console.log('1b1 - orders_num:::: ' + orders[0].order_id)
+      }
+
+      order_id = Convert(order_num)
+
+      // SELECT CART ITEMS TO CREATE ORDER
+      console.log('2 -cart_id:::::' + cart_id)
+      const statement1 = ('SELECT * FROM cart WHERE cart_id = $1')
+      const values1 = [cart_id]
+
+      const temp1 = await db.any(statement1, values1)
+
+      //  CREATE ORDER
+      for (let i = 0; i < temp1.length; i++) {
+        const statement2 = (`INSERT INTO orders (
         order_id, 
         user_id, 
         cart_id, 
@@ -56,26 +62,26 @@ const Checkout = async (request, response) => {
         date
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`)
 
-      const values2 = [
-        order_id,
-        temp1[i].user_id,
-        temp1[i].cart_id,
-        temp1[i].product_id,
-        temp1[i].quantity,
-        temp1[i].price,
-        temp1[i].discount,
-        tax,
-        date
-      ]
+        const values2 = [
+          order_id,
+          temp1[i].user_id,
+          temp1[i].cart_id,
+          temp1[i].product_id,
+          temp1[i].quantity,
+          temp1[i].price,
+          temp1[i].discount,
+          tax,
+          date
+        ]
 
-      await db.any(statement2, values2)
-      // }
+        await db.any(statement2, values2)
+      }
       // CALCULATE THE TOTAL AMOUNT OF THE ORDER
       let amount = 0
       for (let i = 0; i < temp1.length; i++) {
         amount = amount + (temp1[i].quantity * temp1[i].price * (1 - temp1[i].discount) * (1 + tax))
       }
-      console.log(amount)
+      console.log('3. amount::::::::::' + amount)
 
       // CREATE THE ACCOUNT_ID
       const account_id = AccountNumber(accotype, temp1[0].user_id)
@@ -93,9 +99,8 @@ const Checkout = async (request, response) => {
 
       response.status(201).send('order was created')
     }
-
-    return null
   }
+  // return null
 }
 
 module.exports = { Checkout }

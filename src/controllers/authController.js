@@ -12,12 +12,14 @@ let hashedPassword
 const logoutUser = function (req, res) {
   req.session.destroy(function () {
     res.clearCookie('connect.sid')
-    res.redirect('/')
+    res.status(200).send('user logout successfully')
+    // res.redirect('/')
   })
 }
 
 const registerPage = (req, res) => {
-  res.render('register.ejs')
+  res.status(200).send('user successfully registered')
+  // res.render('register.ejs')
 }
 
 const loginPage = async (req, res) => {
@@ -25,7 +27,8 @@ const loginPage = async (req, res) => {
 }
 
 const dashboard = (req, res) => {
-  res.render('dashboard.ejs')
+  // res.render('dashboard.ejs')
+  res.status(200).send('user successfully logged in')
 }
 
 const registerUser = async (request, response) => {
