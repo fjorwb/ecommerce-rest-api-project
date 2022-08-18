@@ -93,8 +93,9 @@ app.use('/orders', checkAuthenticated, routerOrders)
 app.use('/checkout', checkAuthenticated, routerCheckout)
 app.use('/docs', routerDocs)
 
-app.get('/docs', (req, res) => {
-  res.render('index.ejs')
+app.get('/', (req, res) => {
+  res.redirect('/docs')
+  // res.render('index.ejs')
 })
 
 app.use(notFound)
