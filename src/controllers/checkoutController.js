@@ -87,7 +87,7 @@ const Checkout = async (request, response) => {
       const account_id = AccountNumber(accotype, temp1[0].user_id)
 
       // CREATE THE ACCOUNT
-      const statement3 = 'INSERT INTO accounts (account_id, user_id, order_id, amount, date, tax, accotype) VALUES($1, $2, $3, $4, $5, $6, $7)'
+      const statement3 = 'INSERT INTO accounts (account_id, user_id, order_id, amount, date, tax, acco_type) VALUES($1, $2, $3, $4, $5, $6, $7)'
       const values3 = [account_id, temp1[0].user_id, order_id, amount, date, tax, accotype]
 
       await db.any(statement3, values3)
