@@ -72,7 +72,8 @@ const database = async () => {
             account_id              VARCHAR(10)     NOT NULL,
             user_id                 VARCHAR(6)      NOT NULL,
             order_id                VARCHAR(6)      NOT NULL,
-            amount                  NUMERIC(10,2)   NOT NULL
+            amount                  NUMERIC(10,2)   NOT NULL,
+            accotype                VARCHAR(2)      NOT NULL, 
         )
     `
 
