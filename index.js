@@ -93,7 +93,7 @@ app.use('/orders', checkAuthenticated, routerOrders)
 app.use('/checkout', checkAuthenticated, routerCheckout)
 app.use('/docs', routerDocs)
 
-app.get('/', (req, res) => {
+app.get('/docs', (req, res) => {
   res.render('index.ejs')
 })
 
