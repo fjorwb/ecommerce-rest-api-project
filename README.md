@@ -13,31 +13,50 @@ Table of Contents
 
 ## General Info / Summary
 
-The goal of this project is to develop a RESTful API for a fictional e-commerce web application using Node.js, Express and PostgreSQL.
-
-The API will provide basic functionality expected from an e-commerce app:
+This project is part of the Full-Stack-Engineer path and the goal of is:
+- Build a functioning e-commerce REST API using Express, - Node.js, and Postgres
+- Allow users to register and log in via the API
+- Allow CRUD operations on products
+- Allow CRUD operations on user accounts
+- Allow CRUD operations on user carts
+- Allow a user to place an order
+- Allow CRUD operations on orders
+- Use Git version control
+- Use command line
+- Develop locally on your computer
+- Document the API using Swagger
 
 ## Technologies
 Project is created with:
 
 ##### Server
 
-- node.js v16.14.2
-- express v4.17.3
-- npm v8.5.0
-- passport.js v0.0.1
-- express-session v1.15.6
-- corse v2.5.3
-- helmet v3.0.3
+- express 4.18.1 
+- express-async-errors 3.1.1 
+- express-flash 0.0.2 
+- express-rate-limit 6.4.0 
+- express-session 1.17.3 
+- passport 0.6.0 
+- passport-local 1.0.0 
+- bcrypt 5.0.1 
+- body-parser 1.20.0 
+- dotenv 16.0.1 
+- cors 2.8.5 
+- helmet 5.1.0 
+- xss-clean 0.1.1
+- memorystore 1.6.7 
+- morgan 1.10.0 
+- path 0.12.7 
+- serve-favicon 2.5.0 
 
 ##### Database
 - PostgreSQL v14.2
-- psql v12.1
-- pg-promise v8.4.0
+- pg 8.7.3 
+- pg-promise 10.11.1 
 
 ##### Documentation
-- swagger-jsdocs v3.0.0
-- swagger-ui v3.35.0
+- swagger-jsdoc 6.2.1 
+- swagger-ui-express 4.4.0 
 
 ## Setup
 
@@ -49,25 +68,23 @@ Will also run install script of package.json, which will generate an RSA key pai
 
 Open a PostgreSQL database of your choice. Schema with tables is located in db/init.sql. E.g., generate tables by running:
 
-cd db
-cat init.sql | psql -h [PGHOST] -U [PGUSER] -d [PGDATABASE] -w [PGPASSWORD]
-Where 'PGHOST', 'PGUSER', 'PGDATABASE', and 'PGPASSWORD' are your respective Postgres host, user, database, and password values.
-
-Add the following fields with respective values to the .env file:
+npm run create-db
 
 #### Environment Variables
-##### Postgres Database
+Add the following fields with respective values to the .env file:
+
+###### Postgres Database
 PGHOST=
 PGUSER=
 PGDATABASE=
 PGPASSWORD=
 PGPORT=
 
-##### Express server
+###### Express server
 PORT=
 SESSION_SECRET=
 
-##### Node.js 
+###### Node.js 
 NODE_ENV=
 
 
@@ -122,8 +139,8 @@ Can create an account and authorize to access all endpoints via Swagger UI
 A PostgreSQL database will comprise the data layer of the application. The database's schema will be designed using the  dbdiagram.io(https://dbdiagram.io/d)  tool and the database will be implemented through the  psql(https://www.postgresql.org/docs/current/app-psql.html)  CLI for PostgreSQL.
 
 The application's server layer will be implemented on  
-Node.js -> envvironment
-Express.js -> server and routing functionallity 
+Node.js -> environment
+Express.js -> server and routing functionality 
 Passport.js -> authentication and authorization
 pg-promises ->database integration
 express-session -> session management
@@ -139,15 +156,15 @@ Diagram on dbdiagram.io(https://dbdiagram.io/d/62fec877c2d9cf52fad5fb29)
 ## OpenAPI Specification
 
 ### Project Status
-IN PROGRESS: Working on additional secutiry measures
+IN PROGRESS: Working on additional security measures
 
 ### Room for Improvement
 Room for improvement:
 
 Encryption of data in database
 Add more indexes to the database for faster queries
-To do:
 
+To do:
 Allow guest checkout flow
 Send confirmation email after POSTing order
 Build demo frontend site
