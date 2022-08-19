@@ -94,14 +94,13 @@ node index.js
 Usage
 This project can be used as a backend for an e-commerce website. The project handles various endpoints a user may need to access while online shopping such as:
 
-creating user accounts
-users can save addresses and payment methods to account
-displaying products and allowing query by parameter
-creating carts, and consolidating carts when a user logs in
-checkout flow and charging payments with Stripe
-order summaries accessed through user account
-Note: Must use HTTPS with JWT Bearer Authentication See Swagger API Documentation for info routes and their variable requirements.
-
+- creating user accounts
+users can save first and last name, email, and password to register and shopping
+- displaying products and allowing query by parameter
+- creating carts, and consolidating carts when a user logs in
+- checkout flow and charging payments
+- order summaries accessed through user account
+- Authentication and Authorization with three roles: admin, manager, and user
 
 ## Features
 
@@ -110,26 +109,19 @@ Shopping routes that allow shoppers to browse by category or search for products
 Persistent carts that consolidate when user logs-in/registers so shopping data is not lost
 #### User Accounts
 Users can create an account to save shopping session and view information about their orders
-Allow users to store addresses and payment methods, and set a primary address and primary payment method
-#### Fully-Built Checkout Flow
-User can use saved payment methods and addresses, or enter new ones at checkout
-Checkout route provides a review page before placing order
-Payment processing with Stripe API
+
+#### Checkout Flow
+Once a user finish shopping a checkout function summarizes, applies discounts add taxes to the cart and create an order and a account registry
 #### Security
-Custom hashing function for passwords using bcrypt and a salt
-Custom RSA authentication middleware using secure JWT Bearer Tokens to protect against CSRF
+Custom hashing function for passwords using bcrypt
+Custom RSA authentication middleware using secure passport and local strategy  to protect against CSRF
 Custom data sanitizer and validation for protection against XSS attacks
-Parameterized queries to protect against SQL injection
-#### Testing
-Thorough test suite with multiple tests for each route
-End-to-end tests for the checkout flow
-pre-test and post-test scripts to automate testing setup and tear down
+
 #### API Documentation
 Documentation with Swagger UI
 Can try out endpoints with test data via Swagger UI, connected to a test database
 Parameters, request body, and response options are documented for each endpoint
 Can create an account and authorize to access all endpoints via Swagger UI
-
 
 ## Configuration / Implementation
 
@@ -165,6 +157,7 @@ To do:
 Allow guest checkout flow
 Send confirmation email after POSTing order
 Build demo frontend site
+Incorporate Stripe payment gateway
 
 ## Acknowledgements
 This project was based on Codecademy's full-stack portfolio project in the Full-Stack Engineer Career Path.
