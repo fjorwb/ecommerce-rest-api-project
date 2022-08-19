@@ -1,3 +1,5 @@
+[![image]({[BadgeURLHere](https://img.shields.io/badge/Codecademy-FFF0E5?style=for-the-badge&logo=codecademy&logoColor=303347)})
+](https://img.shields.io/badge/Codecademy-FFF0E5?style=for-the-badge&logo=codecademy&logoColor=303347)
 # e-commerce RESTful API Project Plan
 Table of Contents
 - [General Info](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#general-info--summary)
@@ -12,8 +14,6 @@ Table of Contents
 - [Acknowledgements](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#acknowledgements)
 - [License](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#license)
 - [Contact](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#contact)
-
-
 ## General Info / Summary
 This project is part of the Full-Stack-Engineer path and the goal of is:
 - Build a functioning e-commerce REST API using Express, - Node.js, and Postgres
@@ -81,7 +81,6 @@ Open a PostgreSQL database of your choice. Schema with tables is located in db/i
 ```
 npm run create-db
 ```
-
 #### Environment Variables
 Create a .env file in root directory and add the following fields with respective values:
 ###### Postgres Database
@@ -97,8 +96,6 @@ Create a .env file in root directory and add the following fields with respectiv
 - NODE_ENV=
 Then run the app:
 node index.js
-
-#### Installation
 ### Configuration / Implementation
 A PostgreSQL database will comprise the data layer of the application. The database's schema will be designed using the  dbdiagram.io(https://dbdiagram.io/d)  tool and the database will be implemented through the  psql(https://www.postgresql.org/docs/current/app-psql.html)  CLI for PostgreSQL.
 The application's server layer will be implemented on  
@@ -108,11 +105,8 @@ Passport.js -> authentication and authorization
 pg-promises ->database integration
 express-session -> session management
 Finally,  GitHub is being used as the project's version control system.
-
 ### Database Schema
 ![resources/ERD%20ecomm-fjor.png](https://github.com/fjorwb/ecommerce-rest-api-project/blob/master/resources/ERD%20ecomm-fjor.png)
-
-Diagram on dbdiagram.io(https://dbdiagram.io/d/62fec877c2d9cf52fad5fb29)
 ## Usage
 This project can be used as a backend for an e-commerce website. The project handles various endpoints a user may need to access while online shopping such as:
 - creating user accounts
@@ -133,9 +127,7 @@ To do:
 - Send confirmation email after POSTing order
 - Build demo frontend site
 - Incorporate Stripe payment gateway
-
 ## Acknowledgements
 This project was based on Codecademy's full-stack portfolio project in the Full-Stack Engineer Career Path.
-
 ## License
 ## Contact
