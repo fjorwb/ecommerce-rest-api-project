@@ -64,29 +64,26 @@ To run locally, first install node_modules and generate RSA Key Pair:
 
 npm install
 
-Will also run install script of package.json, which will generate an RSA key pair in a .env file.
-
 Open a PostgreSQL database of your choice. Schema with tables is located in db/init.sql. E.g., generate tables by running:
 
 npm run create-db
 
 #### Environment Variables
-Add the following fields with respective values to the .env file:
+Create a .env file in root directory and add the following fields with respective values:
 
 ###### Postgres Database
-PGHOST=
-PGUSER=
-PGDATABASE=
-PGPASSWORD=
-PGPORT=
+- PGHOST=
+- PGUSER=
+- PGDATABASE=
+- PGPASSWORD=
+- PGPORT=
 
 ###### Express server
-PORT=
-SESSION_SECRET=
+- PORT=
+- SESSION_SECRET=
 
 ###### Node.js 
-NODE_ENV=
-
+- NODE_ENV=
 
 Then run the app:
 
