@@ -1,16 +1,18 @@
-
 # e-commerce RESTful API Project Plan
 Table of Contents
 - [General Info](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#general-info--summary)
 - [Documentation](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#technologies)
 - [Technologies](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#technologies)
-- [Setup](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#setup)
 - [Features](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#features)
+- [Setup](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#setup)
 - [Configuration](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#configuration--implementation)
+- [Usage](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#usage)
+- [Project Status](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#project-status)
+- [Room for Improvement](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#room-for-improvement)
 - [Acknowledgements](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#acknowledgements)
 - [License](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#license)
 - [Contact](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#contact)
-- Usage
+
 
 ## General Info / Summary
 This project is part of the Full-Stack-Engineer path and the goal of is:
@@ -52,12 +54,33 @@ Project is created with:
 ##### Documentation
 - swagger-jsdoc 6.2.1 
 - swagger-ui-express 4.4.0 
+## Features
+#### Shopping
+Shopping routes that allow shoppers to browse by category or search for products
+Persistent carts that consolidate when user logs-in/registers so shopping data is not lost
+#### User Accounts
+Users can create an account to save shopping session and view information about their orders
+#### Checkout Flow
+Once a user finish shopping a checkout function summarizes, applies discounts add taxes to the cart and create an order and a account registry
+#### Security
+Custom hashing function for passwords using bcrypt
+Custom RSA authentication middleware using secure passport and local strategy  to protect against CSRF
+Custom data sanitizer and validation for protection against XSS attacks
+#### API Documentation
+Documentation with Swagger UI
+Can try out endpoints with test data via Swagger UI, connected to a test database
+Parameters, request body, and response options are documented for each endpoint
+Can create an account and authorize to access all endpoints via Swagger UI
 ## Setup
 To run locally, first install node_modules and generate RSA Key Pair:
-npm install
+```
+npm install     
+```
 
 Open a PostgreSQL database of your choice. Schema with tables is located in db/init.sql. E.g., generate tables by running:
+```
 npm run create-db
+```
 
 #### Environment Variables
 Create a .env file in root directory and add the following fields with respective values:
@@ -76,33 +99,7 @@ Then run the app:
 node index.js
 
 #### Installation
-Usage
-This project can be used as a backend for an e-commerce website. The project handles various endpoints a user may need to access while online shopping such as:
-- creating user accounts
-users can save first and last name, email, and password to register and shopping
-- displaying products and allowing query by parameter
-- creating carts, and consolidating carts when a user logs in
-- checkout flow and charging payments
-- order summaries accessed through user account
-- Authentication and Authorization with three roles: admin, manager, and user
-## Features
-#### Shopping
-Shopping routes that allow shoppers to browse by category or search for products
-Persistent carts that consolidate when user logs-in/registers so shopping data is not lost
-#### User Accounts
-Users can create an account to save shopping session and view information about their orders
-#### Checkout Flow
-Once a user finish shopping a checkout function summarizes, applies discounts add taxes to the cart and create an order and a account registry
-#### Security
-Custom hashing function for passwords using bcrypt
-Custom RSA authentication middleware using secure passport and local strategy  to protect against CSRF
-Custom data sanitizer and validation for protection against XSS attacks
-#### API Documentation
-Documentation with Swagger UI
-Can try out endpoints with test data via Swagger UI, connected to a test database
-Parameters, request body, and response options are documented for each endpoint
-Can create an account and authorize to access all endpoints via Swagger UI
-## Configuration / Implementation
+### Configuration / Implementation
 A PostgreSQL database will comprise the data layer of the application. The database's schema will be designed using the  dbdiagram.io(https://dbdiagram.io/d)  tool and the database will be implemented through the  psql(https://www.postgresql.org/docs/current/app-psql.html)  CLI for PostgreSQL.
 The application's server layer will be implemented on  
 Node.js -> environment
@@ -112,15 +109,22 @@ pg-promises ->database integration
 express-session -> session management
 Finally,  GitHub is being used as the project's version control system.
 
-## Database Schema
-!(resources/ERD%20ecomm-fjor.png)
+### Database Schema
+![resources/ERD%20ecomm-fjor.png](https://github.com/fjorwb/ecommerce-rest-api-project/blob/master/resources/ERD%20ecomm-fjor.png)
 
 Diagram on dbdiagram.io(https://dbdiagram.io/d/62fec877c2d9cf52fad5fb29)
-
-## OpenAPI Specification
-### Project Status
+## Usage
+This project can be used as a backend for an e-commerce website. The project handles various endpoints a user may need to access while online shopping such as:
+- creating user accounts
+users can save first and last name, email, and password to register and shopping
+- displaying products and allowing query by parameter
+- creating carts, and consolidating carts when a user logs in
+- checkout flow and charging payments
+- order summaries accessed through user account
+- Authentication and Authorization with three roles: admin, manager, and user
+## Project Status
 IN PROGRESS: Working on additional security measures
-### Room for Improvement
+## Room for Improvement
 Room for improvement:
 - Encryption of data in database
 - Add more indexes to the database for faster queries
