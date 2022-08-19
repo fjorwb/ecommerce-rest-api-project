@@ -1,15 +1,17 @@
 
 # e-commerce RESTful API Project Plan
 Table of Contents
-- General Info
-- Documentation
-- Technologies
-- Setup
-- Features
+- [General Info](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#general-info--summary)
+- [Documentation](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#technologies)
+- [Technologies](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#technologies)
+- [Setup](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#setup)
+- [Features](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#features)
+- [Configuration](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#configuration--implementation)
+- [Acknowledgements](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#acknowledgements)
+- [License](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#license)
+- [Contact](https://github.com/fjorwb/ecommerce-rest-api-project/edit/master/README.md#contact)
 - Usage
-- Acknowledgements
-- License
-- Contact
+
 ## General Info / Summary
 This project is part of the Full-Stack-Engineer path and the goal of is:
 - Build a functioning e-commerce REST API using Express, - Node.js, and Postgres
