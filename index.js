@@ -50,10 +50,12 @@ app.use(favicon(path.join(__dirname, '/public/image', 'favicon.ico')))
 
 app.set('trust proxy', 1)
 
-app.use(rateLimiter({
-  windowMs: 15 * 60 * 1000,
-  max: 100
-}))
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+  })
+)
 app.use(morgan('tiny'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -62,20 +64,22 @@ app.use(cors())
 app.use(xss())
 
 app.use(flash())
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  cookie: {
-    secure: false,
-    maxAge: 24 * 60 * 60 * 1000
-  },
-  store: new MemoryStore({
-    checkPeriod: 86400000 // prune expired entries every 24h
-  }),
-  resave: false,
-  saveUninitialized: false,
-  secure: true,
-  httpOnly: true
-}))
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    cookie: {
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000
+    },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    resave: false,
+    saveUninitialized: false,
+    secure: true,
+    httpOnly: true
+  })
+)
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -91,8 +95,8 @@ app.use('/checkout', checkAuthenticated, routerCheckout)
 app.use('/docs', routerDocs)
 
 app.get('/', (req, res) => {
-  res.redirect('/docs')
-  // res.render('index.ejs')
+  // res.redirect('/docs')
+  res.render('index.ejs')
 })
 
 app.use(notFound)
@@ -102,8 +106,7 @@ const port = process.env.PORT || 5000
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)
-}
-)
+})
 
 // const start = async () => {
 //   try {
