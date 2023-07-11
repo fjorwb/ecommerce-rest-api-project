@@ -46,13 +46,22 @@ const registerUser = async (request, response) => {
     errors.push({ message: 'Passwords do not match' })
   }
   if (errors.length > 0) {
-    response.render('register.ejs', { errors, firstname, lastname, email, password, password2 })
+    response.render('register.ejs', {
+      errors,
+      firstname,
+      lastname,
+      email,
+      password,
+      password2
+    })
   } else {
     hashedPassword = await bcrypt.hash(password, 10)
   }
 
   try {
-    const users = await db.one('SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1')
+    const users = await db.one(
+      'SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1'
+    )
 
     if (users?.length === 0 || users?.length === null) {
       user_num = 1
@@ -91,7 +100,13 @@ const loginUser = passport.authenticate('local', {
   successRedirect: '/auth',
   failureRedirect: '/auth/login',
   failureFlash: false
-}
-)
+})
 
-module.exports = { registerUser, loginUser, logoutUser, loginPage, registerPage, dashboard }
+module.exports = {
+  registerUser,
+  loginUser,
+  logoutUser,
+  loginPage,
+  registerPage,
+  dashboard
+}
