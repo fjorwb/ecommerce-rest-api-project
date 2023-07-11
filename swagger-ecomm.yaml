@@ -5,7 +5,8 @@ info:
   contact: {}
   version: '1.0'
 servers:
-  - url: https://ecommerce-fjor.herokuapp.com
+  # - url: https://ecommerce-fjor.herokuapp.com
+  - url: {{process.env.BASE_URL}}
     variables: {}
 paths:
   /auth/register:
@@ -35,7 +36,7 @@ paths:
       deprecated: false
       security: []
       servers:
-        - url: https://ecommerce-fjor.herokuapp.com
+        - url: {{process.env.BASE_URL}}
           variables: {}
   /auth/login:
     post:
@@ -61,7 +62,7 @@ paths:
       deprecated: false
       security: []
       servers:
-        - url: https://ecommerce-fjor.herokuapp.com
+        - url: {{process.env.BASE_URL}}}
           variables: {}
   /auth/logout:
     get:
@@ -446,7 +447,7 @@ paths:
           schema:
             type: integer
             minimum: 1
-          description: the cart id (not cart_id) 
+          description: the cart id (not cart_id)
       responses:
         '200':
           description: ''
@@ -705,7 +706,7 @@ paths:
           schema:
             type: integer
             minimum: 1
-          description: the account id (not account_id)      
+          description: the account id (not account_id)
       requestBody:
         description: ''
         content:

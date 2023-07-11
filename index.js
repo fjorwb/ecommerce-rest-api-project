@@ -102,18 +102,18 @@ app.get('/', (req, res) => {
 app.use(notFound)
 app.use(errorHandler)
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 4000
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
-})
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`)
+// })
 
-// const start = async () => {
-//   try {
-//     app.listen(port, console.log(`Listening on port ${port}`))
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
+const start = async () => {
+  try {
+    app.listen(port, console.log(`Listening on port ${port}`))
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-// start()
+start()
