@@ -4,19 +4,20 @@ const { pool, db } = require('./src/dbConfig')
 
 const bcrypt = require('bcrypt')
 
-function initialize (passport) {
+function initialize(passport) {
   const authenticateUser = async (email, password, done) => {
     const statement = 'SELECT * FROM users WHERE email = $1'
     const values = [email]
 
     const results = await db.query(statement, values)
-    console.log(results)
+    console.log('RESULTS', results)
 
     if (results.length === 0) {
       return done(null, false, { message: 'Incorrect email.' })
     } else {
       if (results.length > 0) {
         const user = results[0]
+        console.log('USER', user)
 
         bcrypt.compare(password, user.password, (error, isMatch) => {
           if (error) {
@@ -89,7 +90,8 @@ function initialize (passport) {
   passport.use(
     new LocalStrategy(
       { usernameField: 'email', passwordField: 'password' },
-      authenticateUser)
+      authenticateUser
+    )
   )
 
   passport.serializeUser((user, done) => {

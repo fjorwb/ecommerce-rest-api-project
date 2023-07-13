@@ -6,7 +6,7 @@ info:
   version: '1.0'
 servers:
   # - url: https://ecommerce-fjor.herokuapp.com
-  - url: {{process.env.BASE_URL}}
+  - url: https://expressjs-production-bb16.up.railway.app/docs
     variables: {}
 paths:
   /auth/register:
@@ -36,7 +36,7 @@ paths:
       deprecated: false
       security: []
       servers:
-        - url: {{process.env.BASE_URL}}
+        - url: https://expressjs-production-bb16.up.railway.app/docs
           variables: {}
   /auth/login:
     post:
@@ -62,7 +62,7 @@ paths:
       deprecated: false
       security: []
       servers:
-        - url: {{process.env.BASE_URL}}}
+        - url: https://expressjs-production-bb16.up.railway.app/docs
           variables: {}
   /auth/logout:
     get:

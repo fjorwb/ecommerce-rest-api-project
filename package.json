@@ -7,10 +7,11 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "create-db": "node -r dotenv/config setupDatabase",
+    "create-db": "node -r dotenv/config setupDatabase.js",
+    "db": "node ../src/model/setupDatabase.js",
     "eslint": "eslint ."
   },
-  "author": "Fernando Oliveri",
+  "author": "FernandoOliveri",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "5.0.1",
@@ -48,5 +49,13 @@
   },
   "engines": {
     "node": "18.x"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fjorwb/ecommerce-rest-api-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fjorwb/ecommerce-rest-api-project/issues"
+  },
+  "homepage": "https://github.com/fjorwb/ecommerce-rest-api-project#readme"
 }

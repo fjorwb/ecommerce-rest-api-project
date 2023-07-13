@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="../public/image/favicon.ico">
-    <link rel="stylesheet" href="/css/index.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Home</title>
-  </head>
-  <body>
-    <header class="container">
-      <div class="header">
-            <H1>e-Commerce API</H1>
-            <h3>fjorwb</h3>
-            <div class="logout">
-                <h1>Home</h1>
-                <form action="/auth/login" method="POST">
-                  <button type="submit" class="btn">Login</button>
-                </form>
-            </div>
-        <hr>
-        <p>This RESTful API is part of Project Portfolio of FSE Codecademy path career.
-        </p>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi numquam libero facere odio est eligendi, provident ipsa, blanditiis adipisci officia accusamus veritatis sint temporibus molestias minima reprehenderit excepturi, a beatae.
-        </p>
-        <br>
-      </div>
-    </header>
 
-    <% if (typeof message !== 'undefined' ) { %>
-    <p><%= message %></p>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/image/favicon.ico">
+  <link rel="stylesheet" href="/css/index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Home</title>
+</head>
+
+<body>
+  <header class="container">
+    <div class="header">
+      <H1>e-Commerce API</H1>
+      <h3>fjorwb</h3>
+      <div class="logout">
+        <h1>Home</h1>
+        <form action="/auth/login" method="POST">
+          <button type="submit" class="btn">Login</button>
+        </form>
+      </div>
+      <hr>
+      <p>This RESTful API is part of Project Portfolio of FSE Codecademy path career.
+      </p>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi numquam libero facere odio est eligendi,
+        provident ipsa, blanditiis adipisci officia accusamus veritatis sint temporibus molestias minima reprehenderit
+        excepturi, a beatae.
+      </p>
+      <br>
+    </div>
+  </header>
+
+  <% if (typeof message !=='undefined' ) { %>
+    <p>
+      <%= message %>
+    </p>
     <% } %>
-  </body>
+</body>
+
 </html>
