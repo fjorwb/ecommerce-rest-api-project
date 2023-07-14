@@ -27,7 +27,7 @@ const loginPage = async (req, res) => {
 }
 
 const dashboard = (req, res) => {
-  console.log(res)
+  // console.log(res)
   res.render('dashboard.ejs')
   // res.status(200).send('user successfully logged in')
 }
@@ -93,7 +93,8 @@ const registerUser = async (request, response) => {
     await db.any(statement, values)
 
     request.flash('success_msg', 'You are now registered. Please log in')
-    response.send('user successfully registered')
+    response.redirect('/auth/register')
+    // response.send('user successfully registered')
   }
 }
 
