@@ -7,8 +7,8 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "create-db": "node -r dotenv/config setupDatabase.js",
-    "db": "node ../src/model/setupDatabase.js",
+    "create-db": "node -r dotenv/config ./src/model/setupDatabase.js",
+    "db": "node setupDatabase.js",
     "eslint": "eslint ."
   },
   "author": "FernandoOliveri",
