@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { db } = require('../dbConfig')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
@@ -10,6 +9,7 @@ let user_id
 let hashedPassword
 
 const logoutUser = function (req, res) {
+  // console.log(req.session)
   req.session.destroy(function () {
     res.clearCookie('connect.sid')
     // res.status(200).send('user logout successfully')

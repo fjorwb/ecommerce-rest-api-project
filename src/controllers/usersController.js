@@ -2,6 +2,8 @@ const { db } = require('../dbConfig')
 
 // get all users
 const getAllUsers = async (request, response) => {
+  // console.log('REQUEST', request)
+
   const results = await db.any('SELECT * FROM users ORDER BY id ASC')
 
   response.status(200).json(results)
@@ -34,10 +36,13 @@ const updateUser = async (request, response) => {
   const { name, email, role } = request.body
 
   if (!name || !email) {
-    return response.status(400).send('request.body is missing/incomplete. Check request.body')
+    return response
+      .status(400)
+      .send('request.body is missing/incomplete. Check request.body')
   }
 
-  const statement = 'UPDATE users SET name = $1, email = $2, role = $3  WHERE id = $4'
+  const statement =
+    'UPDATE users SET name = $1, email = $2, role = $3  WHERE id = $4'
   const values = [name, email, role, id]
 
   await db.any(statement, values)

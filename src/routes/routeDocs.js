@@ -9,15 +9,14 @@ const swaggerOptions = {
     info: {
       title: 'Portfolio / eCommerce RESTFul API',
       version: '1.0.0',
-      description:
-        'RESTFul API for an e-commerce.',
+      description: 'RESTFul API for an e-commerce.',
       license: {
         name: 'MIT',
         url: 'https://choosealicense.com/licenses/mit/'
       }
     }
   },
-  apis: ['swagger-ecomm.yaml']
+  apis: ['swagger-ecommlocal.yaml']
 }
 
 const specs = swagger(swaggerOptions)

@@ -11,7 +11,8 @@ const {
   deleteUser
 } = require('../controllers/usersController')
 
-routerUsers.route('/').get(authorization(['admin', 'manager'], getAllUsers))
+// routerUsers.route('/').get(authorization(['admin', 'manager'], getAllUsers))
+routerUsers.route('/').get(getAllUsers)
 routerUsers
   .route('/:id')
   .get(authorization(['admin']), getUserById)

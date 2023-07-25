@@ -5,15 +5,15 @@ const express = require('express')
 
 // extra security packages
 const helmet = require('helmet')
-const cors = require('cors')
+const cors = require('cors') //
 const xss = require('xss-clean')
 const rateLimiter = require('express-rate-limit')
 
-const passport = require('passport')
-const session = require('express-session')
+const passport = require('passport') //
+const session = require('express-session') //
 const MemoryStore = require('memorystore')(session)
 const flash = require('express-flash')
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser') //
 const morgan = require('morgan')
 const path = require('path')
 const favicon = require('serve-favicon')
@@ -21,7 +21,9 @@ const favicon = require('serve-favicon')
 const notFound = require('./src/middlewares/notFound')
 const errorHandler = require('./src/middlewares/errorHandler')
 
-const app = express()
+const app = express() //
+
+// ------------------------------- END OF IMPORTS -------------------------------
 
 const initializePassport = require('./passportConfig')
 initializePassport(passport)
@@ -43,6 +45,8 @@ const routerCheckout = require('./src/routes/routeCheckout')
 const routerDocs = require('./src/routes/routeDocs')
 
 // middlewares
+// ------------------------------- MIDDLEWARES -------------------------------
+
 app.use(express.static('/public'))
 app.use('/css', express.static(path.join(__dirname, '/public/css')))
 app.use('/image', express.static(path.join(__dirname, '/public/image')))
@@ -57,13 +61,18 @@ app.use(
   })
 )
 app.use(morgan('tiny'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json()) //
+app.use(bodyParser.urlencoded({ extended: true })) //
 app.use(helmet())
-app.use(cors())
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+  })
+)
 app.use(xss())
-
 app.use(flash())
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
