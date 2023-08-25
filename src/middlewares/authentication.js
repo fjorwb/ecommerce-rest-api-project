@@ -1,7 +1,7 @@
 // Check Authenticate
 function checkAuthenticated(req, res, next) {
-  console.log('REQ REQ -------------------------------------', req)
-  console.log('RES RES -------------------------------------', res)
+  // console.log('REQ REQ -------------------------------------', req)
+  // console.log('RES RES -------------------------------------', res)
   if (req.isAuthenticated()) {
     return next()
   }

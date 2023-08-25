@@ -34,6 +34,15 @@ h3 {
     padding-left: 20px;
 }
 
+h4 {
+    font-weight: 700;
+    /* font-size: 30px; */
+    background-color: #fff;
+    padding-left: 20px;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+
 p {
     padding: 10px 5px;
     background-color: #eee;
