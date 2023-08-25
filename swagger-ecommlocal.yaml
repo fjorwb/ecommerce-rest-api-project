@@ -34,9 +34,9 @@ paths:
           headers: {}
       deprecated: false
       security: []
-      servers:
-        - url: http://localhost:5000
-          variables: {}
+      # servers:
+      #   - url: http://localhost:5000
+      #     variables: {}
   /auth/login:
     post:
       tags:
@@ -60,9 +60,10 @@ paths:
           headers: {}
       deprecated: false
       security: []
-      servers:
-        - url: http://localhost:5000
-          variables: {}
+      #servers:
+      # - url: https://expressjs-production-bb16.up.railway.app/docs
+      # - url: http://localhost:5000
+      #  variables: {}
   /auth/logout:
     get:
       tags:

@@ -33,11 +33,7 @@ const getAccountById = async (request, response) => {
 }
 
 const createAccount = async (request, response) => {
-  const {
-    user_id,
-    accotype,
-    amount
-  } = request.body
+  const { user_id, accotype, amount } = request.body
 
   const tax = 0
 
@@ -53,7 +49,8 @@ const createAccount = async (request, response) => {
       const type = AccountNumber(accotype, user_id)
       const account_id = type
 
-      const statement = 'INSERT INTO accounts (account_id, user_id, accotype, amount, tax, date) VALUES ($1, $2, $3, $4, $5, $6)'
+      const statement =
+        'INSERT INTO accounts (account_id, user_id, accotype, amount, tax, date) VALUES ($1, $2, $3, $4, $5, $6)'
       const values = [account_id, user_id, accotype, amount, tax, date]
 
       await db.any(statement, values)
@@ -63,7 +60,8 @@ const createAccount = async (request, response) => {
       const type = AccountNumber(accotype, user_id)
       const account_id = type
 
-      const statement = 'INSERT INTO accounts (account_id, user_id, accotype, amount, tax, date) VALUES($1, $2, $3, $4, $5, $6)'
+      const statement =
+        'INSERT INTO accounts (account_id, user_id, accotype, amount, tax, date) VALUES($1, $2, $3, $4, $5, $6)'
 
       const values = [account_id, user_id, accotype, amount * (1 + tax), tax, date]
 
@@ -82,7 +80,7 @@ const updateAccount = async (request, response) => {
   const values = [id]
 
   const temp = await db.any(statement, values)
-  console.log(temp)
+  // console.log(temp)
 
   if (temp?.length === 0) {
     response.status(404).send(`not account found with id:${id}`)
@@ -121,5 +119,5 @@ module.exports = {
   getAccountById,
   createAccount,
   updateAccount,
-  deleteAccount
+  deleteAccount,
 }

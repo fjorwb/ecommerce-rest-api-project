@@ -8,34 +8,39 @@ let user_num
 let user_id
 let hashedPassword
 
-const logoutUser = function (req, res) {
+const logoutUser = function (req, res, next) {
   // console.log(req.session)
-  req.session.destroy(function () {
-    res.clearCookie('connect.sid')
-    // res.status(200).send('user logout successfully')
-    res.redirect('/')
+  // req.session.destroy(function () {
+  //   res.clearCookie('connect.sid')
+  //   res.redirect('/')
+  // })
+  req.logout((err) => {
+    if (err) return next(err)
+    req.flash('success_msg', 'You are logged out')
+    res.render('index', { message: 'You have logged out successfully' })
   })
 }
 
 const registerPage = (req, res) => {
-  // res.status(200).send('user successfully registered')
   res.render('register.ejs')
 }
 
 const loginPage = async (req, res) => {
+  // console.log(req.session.flash.error)
   res.render('login.ejs')
 }
 
 const dashboard = (req, res) => {
-  // console.log(res)
-  res.render('dashboard.ejs')
-  // res.status(200).send('user successfully logged in')
+  // console.log(req.isAuthenticated())
+  res.render('dashboard.ejs', { user: req.user })
 }
 
-const registerUser = async (request, response) => {
-  const { firstname, lastname, email, password, password2 } = request.body
+const registerUser = async (req, res) => {
+  const { firstname, lastname, email, password, password2 } = req.body
 
   const errors = []
+
+  // console.log(firstname, lastname, email, password, password2)
 
   if (!firstname || !lastname || !email || !password || !password2) {
     errors.push({ message: 'Field missing. Please enter all fields required' })
@@ -47,22 +52,21 @@ const registerUser = async (request, response) => {
     errors.push({ message: 'Passwords do not match' })
   }
   if (errors.length > 0) {
-    response.render('register.ejs', {
+    res.render('register.ejs', {
       errors,
       firstname,
       lastname,
       email,
       password,
-      password2
+      password2,
     })
   } else {
     hashedPassword = await bcrypt.hash(password, 10)
   }
 
   try {
-    const users = await db.one(
-      'SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1'
-    )
+    // To get the last user_id in the table
+    const users = await db.one('SELECT user_id FROM users ORDER BY user_id DESC LIMIT 1')
 
     if (users?.length === 0 || users?.length === null) {
       user_num = 1
@@ -73,16 +77,17 @@ const registerUser = async (request, response) => {
     user_num = 1
   }
 
-  user_id = Convert(user_num)
+  user_id = Convert(user_num) // user_id for new user
 
+  // check if email already exists
   const statement = 'SELECT * FROM users WHERE email = $1'
   const values = [email]
 
   const results = await db.any(statement, values)
 
   if (results.length > 0) {
-    request.flash('error', 'Email already registered')
-    response.render('register.ejs', { message: 'Email already registered' })
+    req.flash('error', 'Email already registered')
+    res.render('register.ejs', { message: 'Email already registered' })
   } else {
     const name = `${firstname} ${lastname}`
 
@@ -92,16 +97,16 @@ const registerUser = async (request, response) => {
 
     await db.any(statement, values)
 
-    request.flash('success_msg', 'You are now registered. Please log in')
-    response.redirect('/auth/register')
-    // response.send('user successfully registered')
+    req.flash('success_msg', 'You are now registered. Please log in')
+    res.send('user successfully registered')
+    res.redirect('/auth/register')
   }
 }
 
 const loginUser = passport.authenticate('local', {
   successRedirect: '/auth',
   failureRedirect: '/auth/login',
-  failureFlash: false
+  failureFlash: false,
 })
 
 module.exports = {
@@ -110,5 +115,5 @@ module.exports = {
   logoutUser,
   loginPage,
   registerPage,
-  dashboard
+  dashboard,
 }

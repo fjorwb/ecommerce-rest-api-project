@@ -53,12 +53,7 @@ const getCartByCartId = async (request, response) => {
 }
 
 const createCart = async (request, response) => {
-  const {
-    user_id,
-    product_id,
-    quantity,
-    samecart
-  } = request.body
+  const { user_id, product_id, quantity, samecart } = request.body
 
   const date = Date.now()
   let cart_num = 0
@@ -70,7 +65,7 @@ const createCart = async (request, response) => {
   let values = []
 
   // charge price & discount from products
-  statement = ('SELECT price, discount FROM products WHERE product_id = $1')
+  statement = 'SELECT price, discount FROM products WHERE product_id = $1'
   values = [product_id]
 
   const temp = await db.any(statement, values)
@@ -102,20 +97,20 @@ const createCart = async (request, response) => {
 
   cart_id = Convert(cart_num)
 
-  statement = ('SELECT * FROM cart WHERE cart_id = $1')
+  statement = 'SELECT * FROM cart WHERE cart_id = $1'
   values = [cart_id]
 
   const results = await db.manyOrNone(statement, values)
 
   if (results?.length > 0) {
-    const stat2 = ('SELECT * FROM cart WHERE cart_id = $1 AND product_id = $2')
+    const stat2 = 'SELECT * FROM cart WHERE cart_id = $1 AND product_id = $2'
     const valu2 = [cart_id, product_id]
 
     const res2 = await db.manyOrNone(stat2, valu2)
 
     if (res2?.length > 0) {
-      const stat3 = (`UPDATE cart SET quantity = $1, price = $2, discount = $3, date = $4 
-                        WHERE cart_id = $5 AND product_id = $6`)
+      const stat3 = `UPDATE cart SET quantity = $1, price = $2, discount = $3, date = $4 
+                        WHERE cart_id = $5 AND product_id = $6`
       const valu3 = [quantity, price, discount, date, cart_id, product_id]
 
       const res3 = db.manyOrNone(stat3, valu3)
@@ -149,9 +144,7 @@ const createCart = async (request, response) => {
 const updateCart = async (request, response) => {
   const { id } = request.params
 
-  const {
-    quantity
-  } = request.body
+  const { quantity } = request.body
 
   const date = Date.now()
 
@@ -163,7 +156,7 @@ const updateCart = async (request, response) => {
   if (results?.length === 0) {
     response.status(404).send(`no cart found with id:${id}`)
   } else {
-    statement = ('UPDATE cart SET quantity = $1, date = $2 WHERE id = $3')
+    statement = 'UPDATE cart SET quantity = $1, date = $2 WHERE id = $3'
     values = [quantity, date, id]
 
     await db.any(statement, values)
@@ -221,7 +214,7 @@ const deleteCartItem = async (request, response) => {
 
 const deleteAllCart = async (request, response) => {
   const { cart_id } = request.params
-  console.log(cart_id)
+  // console.log(cart_id)
 
   const statement = 'SELECT * FROM cart WHERE cart_id = $1'
   const values = [cart_id]
@@ -247,5 +240,5 @@ module.exports = {
   createCart,
   updateCart,
   deleteCartItem,
-  deleteAllCart
+  deleteAllCart,
 }

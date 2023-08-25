@@ -23,6 +23,8 @@
           <button type="submit" class="btn">Logout</button>
         </form>
       </div>
+      <h4>Hi, <%= user.name %>
+      </h4>
       <hr>
       <p>This RESTful API is part of Project Portfolio of FSE Codecademy path career.
       </p>
@@ -30,6 +32,11 @@
         provident ipsa, blanditiis adipisci officia accusamus veritatis sint temporibus molestias minima reprehenderit
         excepturi, a beatae.
       </p>
+      <ul>
+        <%= 'user id:' + user.id %>
+          <%= 'user email:' + user.email %>
+            <%= 'user passw:' + user.password %>
+      </ul>
       <br>
     </div>
   </header>

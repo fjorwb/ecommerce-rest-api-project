@@ -49,6 +49,11 @@
   "engines": {
     "node": "18.x"
   },
+  "eslintConfig": {
+    "extends": [
+      "standard"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fjorwb/ecommerce-rest-api-project.git"
